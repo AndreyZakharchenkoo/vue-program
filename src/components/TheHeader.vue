@@ -2,6 +2,9 @@
   <header class="header">
     <div class="container">
       <the-logo/>
+      <router-link to="/" class="header__icon">
+        <img src="../assets/icon-search.svg" alt="Search icon">
+      </router-link>
     </div>
   </header>
 </template>
@@ -27,10 +30,15 @@ export default {
 
   .container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     min-height: 70px;
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+
+  &__icon {
+    width: 32px;
   }
 }
 </style>
