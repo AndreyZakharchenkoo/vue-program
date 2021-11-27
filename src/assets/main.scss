@@ -31,7 +31,6 @@ blockquote {
 
 q {
   &:before, &:after {
-    content: '';
     content: none;
   }
 }
@@ -59,7 +58,7 @@ img, svg {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-  transform: scale(0.99);
+  transform: scale(0.995);
 }
 
 // Variables
@@ -112,3 +111,176 @@ h1 {
     border-radius: 0 4px 4px 0;
   }
 }
+
+.box-info,
+.box-search {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: #333 url("https://i2.wp.com/onhike.com/wp-content/uploads/2021/07/free-streaming-movies-to-find-some-of-the-best-movies-of-the-past.jpg?fit=1478%2C829&ssl=1") no-repeat center center;
+    background-size: cover;
+    filter: blur(4px);
+    background-blend-mode: darken;
+  }
+}
+
+.box-gallery {
+  &__top {
+    background-color: #888888;
+
+    .container {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.gallery {
+  display: grid;
+  grid-gap: 60px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  padding: 70px 0;
+}
+
+//.card {
+//  position: relative;
+//
+//  img {
+//    width: 100%;
+//    height: auto;
+//    aspect-ratio: 2 / 3;
+//    object-position: center center;
+//    object-fit: cover;
+//  }
+//
+//  &__info {
+//    display: grid;
+//    margin-top: 20px;
+//    grid-gap: 5px;
+//    align-items: baseline;
+//    grid-template-columns: 1fr max-content;
+//    grid-template-areas:
+//      'name year'
+//      'genre genre';
+//    font-weight: 500;
+//  }
+//
+//  &__name {
+//    grid-area: name;
+//    margin: 0;
+//    font-size: 18px;
+//    opacity: .7;
+//  }
+//
+//  &__genre {
+//    grid-area: genre;
+//    margin: 0;
+//    font-size: 14px;
+//    opacity: .5;
+//  }
+//
+//  &__year {
+//    grid-area: year;
+//    padding: 5px 10px;
+//    border: 1px solid #979797;
+//    border-radius: 4px;
+//    font-size: 14px;
+//    opacity: 0.5;
+//  }
+//
+//  &__rating {
+//    grid-area: rating;
+//    display: flex;
+//    align-items: center;
+//    justify-content: center;
+//    width: 70px;
+//    height: 70px;
+//    border: 1px solid #fff;
+//    border-radius: 50%;
+//    color: #A1E66F;
+//    font-size: 26px;
+//  }
+//
+//  &__description {
+//    grid-area: description;
+//    font-size: 17px;
+//    line-height: 1.25;
+//    opacity: .8;
+//  }
+//
+//  &__link {
+//    position: absolute;
+//    z-index: 1;
+//    top: 0;
+//    left: 0;
+//    right: 0;
+//    bottom: 0;
+//
+//    &:hover ~ .card__info h3 {
+//      color: #F65261;
+//    }
+//  }
+//
+//  h3 {
+//    transition: .2s;
+//  }
+//}
+//
+//.card.extended {
+//  display: flex;
+//  align-items: center;
+//
+//  $this: '.card';
+//
+//  #{$this}__img {
+//    width: 280px;
+//    margin-right: 60px;
+//  }
+//
+//  img {
+//    max-width: 280px;
+//  }
+//
+//  #{$this}__info {
+//    flex: 1;
+//    grid-gap: 20px;
+//    align-items: center;
+//    grid-template-columns: repeat(2, max-content);
+//    grid-template-areas:
+//      'name rating'
+//      'genre .'
+//      'year .'
+//      'description description'
+//  ;
+//    margin-top: 0;
+//  }
+//
+//  #{$this}__genre {
+//    margin-top: 30px;
+//  }
+//
+//  #{$this}__year {
+//    border: none;
+//    padding: 0;
+//    color: #F65261;
+//    font-size: 26px;
+//  }
+//
+//  h3 {
+//    font-size: 53px;
+//    line-height: 1.1;
+//    font-weight: 300;
+//    opacity: .7;
+//  }
+//}

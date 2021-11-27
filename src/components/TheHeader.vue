@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import TheLogo from '@/components/TheLogo.vue'
+import TheLogo from '@/stories/TheLogo.vue'
 
 export default {
   name: 'TheHeader',
@@ -20,6 +20,7 @@ export default {
 <style lang="scss" scoped>
 .header {
   position: absolute;
+  z-index: 100;
   top: 0;
   left: 0;
   right: 0;

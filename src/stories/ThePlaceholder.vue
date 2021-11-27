@@ -1,6 +1,6 @@
 <template>
-  <div class="placeholder-wrap">
-    <h1 class="placeholder">{{ title }}</h1>
+  <div class="placeholder">
+    <h2>{{ title }}</h2>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style scoped>
-.placeholder-wrap {
+.placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,11 +26,13 @@ export default {
   padding: 80px 0;
 }
 
-.placeholder {
-  color: lightgray;
-  text-align: center;
+.placeholder h2 {
   max-width: 40ch;
+  font-size: 40px;
+  font-weight: 300;
+  color: lightgray;
   opacity: .8;
+  text-align: center;
   text-transform: none;
 }
 </style>

@@ -1,83 +1,42 @@
 <template>
-  <div>
-    <section class="box-search">
-      <div class="container">
-        <h1>FIND YOUR MOVIE</h1>
-        <form class="search" @submit.prevent="searchFilms">
-          <div class="search__input">
-            <the-input placeholder="Search" v-model.trim.lazy="searchValue"/>
-          </div>
-          <the-button type="submit" class="large">Search</the-button>
-        </form>
-        <div class="sort">
-          <div class="sort__label">Search by</div>
-          <div class="button-group">
-            <the-button class="active" @click="searchByParam('title', $event)">Title</the-button>
-            <the-button @click="searchByParam('genres', $event)">Genre</the-button>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="box-gallery">
-      <div class="box-gallery__top">
-        <div class="container">
-          <div class="sort">
-            <div class="sort__label">Sort by</div>
-            <div class="button-group">
-              <the-button class="active" @click="sortGallery('date', $event)">Release date</the-button>
-              <the-button @click="sortGallery('rating', $event)">Rating</the-button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <h2 hidden>Films gallery</h2>
-        <ul v-if="!searchValue.length" class="gallery">
-          <li
-            class="post__item"
-            v-for="item in gallery"
-            :key="item.id"
-          >
-            <the-card :card="item" />
-          </li>
-        </ul>
-        <ul v-else-if="results.length" class="gallery">
-          <li
-            class="post__item"
-            v-for="item in results"
-            :key="item.id"
-          >
-            <the-card :card="item" />
-          </li>
-        </ul>
-        <the-placeholder
-          v-else
-          title="No films found"
-        />
-      </div>
-    </section>
+  <div
+    class="card"
+    :class="{ extended: isExtended }"
+  >
+    <router-link
+      v-if="!isExtended"
+      class="card__link"
+      :to="{ name: 'Film', params: { id: card.id }  }"
+    />
+    <picture class="card__img">
+      <img width="300" height="450" :src="card.poster_path" :alt="card.title">
+    </picture>
+    <div class="card__info">
+      <h3 class="card__name">{{ card.title }}</h3>
+      <p class="card__genre">{{ card.genres[0] }}</p>
+      <div class="card__year">{{ card.release_date }}</div>
+      <template v-if="isExtended">
+        <div class="card__rating">{{ card.vote_count }}</div>
+        <div class="card__description">{{ card.overview }}</div>
+      </template>
+    </div>
   </div>
 </template>
 
 <script>
-import TheInput from '@/stories/TheInput.vue'
-import TheButton from '@/stories/TheButton.vue'
-import TheCard from '@/stories/TheCard.vue'
-import ThePlaceholder from '@/stories/ThePlaceholder.vue'
-
 export default {
-  name: 'Home',
-  components: {
-    TheButton,
-    TheInput,
-    TheCard,
-    ThePlaceholder
+  name: 'TheCard',
+  props: {
+    card: {
+      type: Object,
+      required: true
+    },
+    isExtended: {
+      type: Boolean,
+      default: false
+    }
   },
   data: () => ({
-    searchValue: '',
-    searchType: 'title',
-    results: '',
-    sortParam: 'date',
     gallery: [
       {
         id: 447365,
@@ -264,73 +223,130 @@ export default {
         runtime: null
       }
     ]
-  }),
-  computed: {
-    sortedGallery () {
-      const { gallery } = this
-
-      switch (this.sortParam) {
-        case 'date':
-          return gallery.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
-        case 'rating':
-          return gallery.sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
-        default:
-          return gallery
-      }
-    }
-  },
-  methods: {
-    sortGallery (param, event) {
-      this.sortParam = param
-
-      const buttonsGroup = event.path[1].querySelectorAll('button')
-      buttonsGroup.forEach((elem) => {
-        elem.classList.remove('active')
-      })
-      event.target.classList.add('active')
-    },
-    searchByParam (param, event) {
-      this.searchType = param
-
-      const buttonsGroup = event.path[1].querySelectorAll('button')
-      buttonsGroup.forEach((elem) => {
-        elem.classList.remove('active')
-      })
-      event.target.classList.add('active')
-    },
-    searchFilms () {
-      this.results = this.gallery.filter((item) => item[this.searchType].toString().toLowerCase()
-        .includes(this.searchValue.toLowerCase()))
-    }
-  }
+  })
 }
 </script>
 
-<style lang="scss" scoped>
-.box-search {
-  .search {
-    margin: 40px 0 25px;
-  }
+<style scoped>
+.card {
+  position: relative;
 }
 
-.search {
+.card img {
+  height: auto;
+  aspect-ratio: 0.6666666667;
+  object-position: center center;
+  object-fit: cover;
+}
+
+.card__info {
   display: grid;
-  grid-gap: 15px;
-  grid-template-columns: 1fr min-content;
+  margin-top: 20px;
+  grid-gap: 5px;
+  align-items: baseline;
+  grid-template-columns: 1fr max-content;
+  grid-template-areas: 'name year' 'genre genre';
+  font-weight: 500;
 }
 
-.sort {
+.card__name {
+  grid-area: name;
+  margin: 0;
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+.card__genre {
+  grid-area: genre;
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+.card__year {
+  grid-area: year;
+  padding: 5px 10px;
+  border: 1px solid #979797;
+  border-radius: 4px;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+.card__rating {
+  grid-area: rating;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  color: #a1e66f;
+  font-size: 26px;
+}
 
-  &__label {
-    margin-right: 16px;
-    opacity: 0.8;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0.89px;
-    line-height: 19px;
-    text-transform: uppercase;
-  }
+.card__description {
+  grid-area: description;
+  font-size: 17px;
+  line-height: 1.25;
+  opacity: 0.8;
+}
+
+.card__link {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.card__link:hover ~ .card__info h3 {
+  color: #f65261;
+}
+
+.card h3 {
+  transition: 0.2s;
+}
+
+.card.extended {
+  display: flex;
+  align-items: center;
+}
+
+.card.extended .card__img {
+  width: 280px;
+  margin-right: 60px;
+}
+
+.card.extended img {
+  max-width: 280px;
+}
+
+.card.extended .card__info {
+  flex: 1;
+  grid-gap: 20px;
+  align-items: center;
+  grid-template-columns: repeat(2, max-content);
+  grid-template-areas: 'name rating' 'genre .' 'year .' 'description description';
+  margin-top: 0;
+}
+
+.card.extended .card__genre {
+  margin-top: 30px;
+}
+
+.card.extended .card__year {
+  border: none;
+  padding: 0;
+  color: #f65261;
+  font-size: 26px;
+}
+
+.card.extended h3 {
+  font-size: 53px;
+  line-height: 1.1;
+  font-weight: 300;
+  opacity: 0.7;
 }
 </style>

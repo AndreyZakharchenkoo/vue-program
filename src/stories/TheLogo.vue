@@ -1,5 +1,5 @@
 <template>
-  <a href="#" class="logo" aria-label="Logo"><b>netflix</b>roulette</a>
+  <router-link to="/" class="logo" aria-label="Logo"><b>netflix</b>roulette</router-link>
 </template>
 
 <script>
@@ -8,15 +8,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .logo {
   color: #F65261;
   font-size: 20px;
   font-weight: 500;
   text-decoration: none;
-
-  b {
-    font-weight: bold;
-  }
 }
 </style>
