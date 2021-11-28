@@ -3,7 +3,7 @@
     <section class="box-info">
       <div class="container">
         <the-card
-          :card="filmById"
+          :card="currentFilm"
           is-extended
         />
       </div>
@@ -19,10 +19,10 @@
         <ul class="gallery">
           <li
             class="post__item"
-            v-for="item in sortedFilmsByGenre"
+            v-for="item in sortedFilmsByParam"
             :key="item.id"
           >
-            <the-card :card="item"/>
+            <the-card :card="item" />
           </li>
         </ul>
       </div>
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import TheCard from '@/stories/TheCard.vue'
 
 export default {
@@ -39,21 +38,18 @@ export default {
   components: {
     TheCard
   },
-  computed: {
-    ...mapState({
-      gallery: state => state.gallery
-    }),
-    sortedFilmsByGenre () {
-      return this.$store.getters.GET_FILMS_BY_GENRE(this.currentGenre)
-    },
-    filmById () {
-      const id = this.$route.params.id
-      return this.gallery.find(item => item.id === id)
-    },
-    currentGenre () {
-      return this.filmById.genres[0]
-    }
-  }
+  mounted () {
+    const id = this.$route.params.id
+
+    this.currentFilm = this.$store.getters.GET_FILM_BY_ID(id)
+    this.currentGenre = this.currentFilm.genres[0]
+    this.sortedFilmsByParam = this.$store.getters.GET_FILMS_BY_PARAM(this.currentGenre)
+  },
+  data: () => ({
+    sortedFilmsByParam: [],
+    currentFilm: {},
+    currentGenre: ''
+  })
 }
 </script>
 

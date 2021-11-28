@@ -5,7 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    gallery: [
+    searchValue: '',
+    searchParam: 'title',
+    sortParam: 'date',
+    films: [
       {
         id: 447365,
         title: 'Guardians of the Galaxy Vol. 3',
@@ -185,11 +188,54 @@ export default new Vuex.Store({
     ]
   },
   getters: {
-    GET_FILMS_BY_GENRE: state => param => {
-      return state.gallery.filter(item => item.genres.includes(param))
+    GET_FILMS: state => {
+      if (!state.searchValue) {
+        console.log(1)
+        return state.films
+      } else {
+        console.log(2)
+        return state.films.filter(item => item[state.searchParam].toString().toLowerCase()
+          .includes(state.searchValue.toLowerCase()))
+      }
+
+      switch (state.sortParam) {
+        case 'date':
+          return state.films.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
+        case 'rating':
+          return state.films.sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
+        default:
+          return state.films
+      }
+    },
+    GET_FILM_BY_ID: state => id => {
+      return state.films.find(item => item.id === id)
     }
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    UPDATE_SEARCH_VALUE (state, payload) {
+      state.searchValue = payload
+    },
+    UPDATE_SEARCH_PARAM (state, payload) {
+      state.searchParam = payload
+    },
+    UPDATE_SORT_PARAM (state, payload) {
+      state.sortParam = payload
+    },
+    UPDATE_FILMS (state, payload) {
+      state.films = payload
+    }
+  },
+  // actions: {
+  //   async FETCH_FILMS ({ commit }) {
+  //     await this.$axios.get('https://jsonplaceholder.typicode.com/todos/1')
+  //       .then((res) => {
+  //         console.log(res)
+  //         // commit('UPDATE_FILMS', res)
+  //       })
+  //       .catch((error) => {
+  //         console.error(error.statusText)
+  //       })
+  //   }
+  // },
   modules: {}
 })

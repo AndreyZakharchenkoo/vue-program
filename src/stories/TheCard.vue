@@ -147,7 +147,7 @@ export default {
 }
 
 .card.extended .card__genre {
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .card.extended .card__year {

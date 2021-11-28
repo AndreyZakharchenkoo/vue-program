@@ -3,9 +3,11 @@
     <section class="box-search">
       <div class="container">
         <h1>FIND YOUR MOVIE</h1>
-        <form class="search" @submit.prevent>
+        <form
+          class="search"
+          @submit.prevent>
           <div class="search__input">
-            <the-input placeholder="Search" v-model.trim="searchValue" @input="searchFilms" />
+            <the-input placeholder="Search" v-model.trim="searchValue" />
           </div>
           <the-button type="submit" class="large">Search</the-button>
         </form>
@@ -21,31 +23,21 @@
     <section class="box-gallery">
       <div class="box-gallery__top">
         <div class="container">
-          <div v-if="results.length" class="quantity">{{ results.length }} movie found</div>
+          <div v-if="films.length && searchValue" class="quantity">{{ films.length }} movie found</div>
           <div class="sort">
             <div class="sort__label">Sort by</div>
             <div class="button-group">
-              <the-button class="active" @click="sortGallery('date', $event)">Release date</the-button>
-              <the-button @click="sortGallery('rating', $event)">Rating</the-button>
+              <the-button class="active" @click="sortByParam('date', $event)">Release date</the-button>
+              <the-button @click="sortByParam('rating', $event)">Rating</the-button>
             </div>
           </div>
         </div>
       </div>
       <div class="container">
-        <h2 hidden>Films gallery</h2>
-        <ul v-if="!searchValue.length" class="gallery">
+        <ul v-if="films.length" class="gallery">
           <li
             class="post__item"
-            v-for="item in gallery"
-            :key="item.id"
-          >
-            <the-card :card="item" />
-          </li>
-        </ul>
-        <ul v-else-if="results.length" class="gallery">
-          <li
-            class="post__item"
-            v-for="item in results"
+            v-for="item in films"
             :key="item.id"
           >
             <the-card :card="item" />
@@ -61,7 +53,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import TheInput from '@/stories/TheInput.vue'
 import TheButton from '@/stories/TheButton.vue'
 import TheCard from '@/stories/TheCard.vue'
@@ -76,32 +68,29 @@ export default {
     ThePlaceholder
   },
   data: () => ({
-    searchValue: '',
     searchType: 'title',
-    results: '',
     sortParam: 'date'
   }),
   computed: {
-    ...mapState({
-      gallery: state => state.gallery
+    ...mapGetters({
+      films: 'GET_FILMS'
     }),
-    sortedGallery () {
-      const { gallery } = this
-
-      switch (this.sortParam) {
-        case 'date':
-          return gallery.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
-        case 'rating':
-          return gallery.sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
-        default:
-          return gallery
+    searchValue: {
+      get () {
+        return this.$store.state.searchValue
+      },
+      set (val) {
+        this.UPDATE_SEARCH_VALUE(val)
       }
     }
   },
   methods: {
-    sortGallery (param, event) {
-      this.sortParam = param
-
+    ...mapMutations([
+      'UPDATE_SEARCH_VALUE',
+      'UPDATE_SEARCH_PARAM',
+      'UPDATE_SORT_PARAM'
+    ]),
+    switchActiveButton (event) {
       const buttonsGroup = event.path[1].querySelectorAll('button')
       buttonsGroup.forEach((elem) => {
         elem.classList.remove('active')
@@ -109,17 +98,12 @@ export default {
       event.target.classList.add('active')
     },
     searchByParam (param, event) {
-      this.searchType = param
-
-      const buttonsGroup = event.path[1].querySelectorAll('button')
-      buttonsGroup.forEach((elem) => {
-        elem.classList.remove('active')
-      })
-      event.target.classList.add('active')
+      this.switchActiveButton(event)
+      this.UPDATE_SEARCH_PARAM(param)
     },
-    searchFilms () {
-      this.results = this.gallery.filter((item) => item[this.searchType].toString().toLowerCase()
-        .includes(this.searchValue.toLowerCase()))
+    sortByParam (param, event) {
+      this.switchActiveButton(event)
+      this.UPDATE_SORT_PARAM(param)
     }
   }
 }
