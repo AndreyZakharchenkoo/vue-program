@@ -190,25 +190,33 @@ export default new Vuex.Store({
   getters: {
     GET_FILMS: state => {
       if (!state.searchValue) {
-        console.log(1)
-        return state.films
-      } else {
-        console.log(2)
-        return state.films.filter(item => item[state.searchParam].toString().toLowerCase()
-          .includes(state.searchValue.toLowerCase()))
+        switch (state.sortParam) {
+          case 'date':
+            return state.films.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
+          case 'rating':
+            return state.films.sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
+          default:
+            return state.films
+        }
       }
+
+      const searchedFilms = state.films.filter(item => item[state.searchParam].toString().toLowerCase()
+        .includes(state.searchValue.toLowerCase()))
 
       switch (state.sortParam) {
         case 'date':
-          return state.films.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
+          return searchedFilms.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
         case 'rating':
-          return state.films.sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
+          return searchedFilms.sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
         default:
-          return state.films
+          return searchedFilms
       }
     },
     GET_FILM_BY_ID: state => id => {
       return state.films.find(item => item.id === id)
+    },
+    GET_FILMS_BY_GENRE: state => param => {
+      return state.films.filter(item => item.genres.includes(param))
     }
   },
   mutations: {
