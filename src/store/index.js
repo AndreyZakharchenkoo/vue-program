@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
           'Adventure',
           'Science Fiction'
         ],
+        duration: '1h 24min',
         runtime: null
       },
       {
@@ -41,6 +43,7 @@ export default new Vuex.Store({
           'Science Fiction',
           'Adventure'
         ],
+        duration: '1h 34min',
         runtime: null
       },
       {
@@ -59,6 +62,7 @@ export default new Vuex.Store({
           'Adventure',
           'Science Fiction'
         ],
+        duration: '1h 32min',
         runtime: null
       },
       {
@@ -76,6 +80,7 @@ export default new Vuex.Store({
           'Fantasy',
           'Science Fiction'
         ],
+        duration: '1h 22min',
         runtime: null
       },
       {
@@ -92,6 +97,7 @@ export default new Vuex.Store({
         genres: [
           'Science Fiction'
         ],
+        duration: '1h 44min',
         runtime: null
       },
       {
@@ -109,6 +115,7 @@ export default new Vuex.Store({
           'Adventure',
           'Science Fiction'
         ],
+        duration: '1h 25min',
         runtime: null
       },
       {
@@ -127,6 +134,7 @@ export default new Vuex.Store({
           'Fantasy',
           'Science Fiction'
         ],
+        duration: '1h 15min',
         runtime: null
       },
       {
@@ -144,6 +152,7 @@ export default new Vuex.Store({
           'Adventure',
           'Thriller'
         ],
+        duration: '1h 55min',
         runtime: null
       },
       {
@@ -164,6 +173,7 @@ export default new Vuex.Store({
           'Science Fiction',
           'Thriller'
         ],
+        duration: '1h 45min',
         runtime: null
       },
       {
@@ -183,6 +193,7 @@ export default new Vuex.Store({
           'Family',
           'Science Fiction'
         ],
+        duration: '1h 52min',
         runtime: null
       }
     ]
@@ -215,8 +226,8 @@ export default new Vuex.Store({
     GET_FILM_BY_ID: state => id => {
       return state.films.find(item => item.id === id)
     },
-    GET_FILMS_BY_GENRE: state => param => {
-      return state.films.filter(item => item.genres.includes(param))
+    GET_FILMS_BY_GENRE: state => (param, id) => {
+      return state.films.filter(item => item.genres.includes(param) && item.id !== id)
     }
   },
   mutations: {
@@ -233,17 +244,7 @@ export default new Vuex.Store({
       state.films = payload
     }
   },
-  // actions: {
-  //   async FETCH_FILMS ({ commit }) {
-  //     await this.$axios.get('https://jsonplaceholder.typicode.com/todos/1')
-  //       .then((res) => {
-  //         console.log(res)
-  //         // commit('UPDATE_FILMS', res)
-  //       })
-  //       .catch((error) => {
-  //         console.error(error.statusText)
-  //       })
-  //   }
-  // },
-  modules: {}
+  actions: {},
+  modules: {},
+  plugins: [createPersistedState()]
 })

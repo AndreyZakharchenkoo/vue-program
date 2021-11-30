@@ -43,7 +43,7 @@ export default {
 
     this.currentFilm = this.$store.getters.GET_FILM_BY_ID(id)
     this.currentGenre = this.currentFilm.genres[0]
-    this.sortedFilmsByParam = this.$store.getters.GET_FILMS_BY_GENRE(this.currentGenre)
+    this.sortedFilmsByParam = this.$store.getters.GET_FILMS_BY_GENRE(this.currentGenre, id)
   },
   data: () => ({
     sortedFilmsByParam: [],

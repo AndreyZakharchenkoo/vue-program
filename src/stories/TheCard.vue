@@ -7,6 +7,7 @@
       v-if="!isExtended"
       class="card__link"
       :to="{ name: 'Film', params: { id: card.id }  }"
+      @click.native="scrollToTop"
     />
     <picture class="card__img">
       <img width="300" height="450" :src="card.poster_path" :alt="card.title">
@@ -17,6 +18,7 @@
       <div class="card__year">{{ year }}</div>
       <template v-if="isExtended">
         <div class="card__rating">{{ card.vote_count }}</div>
+        <div class="card__duration">{{ duration }}</div>
         <div class="card__description">{{ card.overview }}</div>
       </template>
     </div>
@@ -29,7 +31,8 @@ export default {
   props: {
     card: {
       type: Object,
-      required: true
+      required: true,
+      default: () => ({})
     },
     isExtended: {
       type: Boolean,
@@ -39,6 +42,19 @@ export default {
   computed: {
     year () {
       return this.card.release_date.split('-')[0]
+    },
+    duration () {
+      const duration = this.card.duration.split(' ')
+      return (parseInt(duration[0]) * 60 + parseInt(duration[1])) + 'min'
+    }
+  },
+  methods: {
+    scrollToTop () {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      })
     }
   }
 }
@@ -110,6 +126,13 @@ export default {
   opacity: 0.8;
 }
 
+.card__duration {
+  grid-area: duration;
+  color: #f65261;
+  font-size: 26px;
+  opacity: 0.75;
+}
+
 .card__link {
   position: absolute;
   z-index: 1;
@@ -141,8 +164,12 @@ export default {
   flex: 1;
   grid-gap: 20px;
   align-items: baseline;
-  grid-template-columns: 1fr 70px;
-  grid-template-areas: 'name rating' 'genre .' 'year .' 'description description';
+  grid-template-columns: 100px 100px 1fr 70px;
+  grid-template-areas:
+    'name name name rating'
+    'genre genre genre .'
+    'year duration . .'
+    'description description description description';
   margin-top: 0;
 }
 
