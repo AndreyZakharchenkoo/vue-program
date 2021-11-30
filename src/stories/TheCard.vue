@@ -9,8 +9,16 @@
       :to="{ name: 'Film', params: { id: card.id }  }"
       @click.native="scrollToTop"
     />
-    <picture class="card__img">
-      <img width="300" height="450" :src="card.poster_path" :alt="card.title">
+    <picture
+      class="card__img"
+      v-lazyload
+    >
+      <img
+        width="327"
+        height="590"
+        :data-src="card.poster_path"
+        :alt="card.title"
+      >
     </picture>
     <div class="card__info">
       <h3 class="card__name">{{ card.title }}</h3>
@@ -26,6 +34,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'TheCard',
   props: {
