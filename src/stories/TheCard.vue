@@ -74,12 +74,18 @@ export default {
   position: relative;
 }
 
+.card__img.loaded img {
+  transition: 1s;
+  opacity: 1;
+}
+
 .card img {
   width: 100%;
   height: auto;
   aspect-ratio: 0.6666666667;
   object-position: center center;
   object-fit: cover;
+  opacity: 0;
 }
 
 .card__info {

@@ -2,12 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import LazyLoadDirective from './directives/LazyLoadDirective.js'
+import lazyLoadImg from './plugins/lazy-loading.js'
 import '@/assets/main.scss'
 
 Vue.config.productionTip = false
-
-Vue.directive('lazyload', LazyLoadDirective)
+Vue.use(lazyLoadImg)
 
 new Vue({
   router,

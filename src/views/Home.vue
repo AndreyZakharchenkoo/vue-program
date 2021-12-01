@@ -67,10 +67,6 @@ export default {
     TheCard,
     ThePlaceholder
   },
-  data: () => ({
-    searchType: 'title',
-    sortParam: 'date'
-  }),
   computed: {
     ...mapGetters({
       films: 'GET_FILMS'
