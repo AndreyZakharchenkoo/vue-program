@@ -67,6 +67,9 @@ export default {
     TheCard,
     ThePlaceholder
   },
+  mounted () {
+    this.searchValue = ''
+  },
   computed: {
     ...mapGetters({
       films: 'GET_FILMS'

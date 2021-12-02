@@ -17,8 +17,7 @@
     "style-loader": "^3.3.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
-    "vuex": "^3.4.0",
-    "vuex-persistedstate": "^4.1.0"
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

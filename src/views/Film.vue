@@ -38,18 +38,21 @@ export default {
   components: {
     TheCard
   },
-  mounted () {
-    const id = this.$route.params.id
-
-    this.currentFilm = this.$store.getters.GET_FILM_BY_ID(id)
-    this.currentGenre = this.currentFilm.genres[0]
-    this.sortedFilmsByParam = this.$store.getters.GET_FILMS_BY_GENRE(this.currentGenre, id)
-  },
-  data: () => ({
-    sortedFilmsByParam: [],
-    currentFilm: {},
-    currentGenre: ''
-  })
+  computed: {
+    id () {
+      return +this.$route.params.id
+    },
+    currentFilm () {
+      return this.$store.getters.GET_FILM_BY_ID(this.id)
+    },
+    currentGenre () {
+      const genres = this.currentFilm?.genres || []
+      return genres[0]
+    },
+    sortedFilmsByParam () {
+      return this.$store.getters.GET_FILMS_BY_GENRE(this.currentGenre, this.id)
+    }
+  }
 }
 </script>
 
