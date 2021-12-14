@@ -26,7 +26,7 @@
       <div class="card__year">{{ year }}</div>
       <template v-if="isExtended">
         <div class="card__rating">{{ card.vote_count }}</div>
-        <div class="card__duration">{{ duration }}</div>
+        <div class="card__duration" data-test="duration">{{ duration }}</div>
         <div class="card__description">{{ card.overview }}</div>
       </template>
     </div>
@@ -54,7 +54,7 @@ export default {
     },
     duration () {
       const duration = this.card.duration.split(' ')
-      return (parseInt(duration[0]) * 60 + parseInt(duration[1])) + 'min'
+      return (parseInt(duration[0]) * 60 + parseInt(duration[1])) + ' min'
     }
   },
   methods: {

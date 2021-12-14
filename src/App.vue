@@ -1,12 +1,12 @@
 <template>
   <div class="layout">
-    <the-header/>
+    <the-header />
     <main>
       <transition name="fade" mode="out-in">
         <router-view :key="$route.fullPath" />
       </transition>
     </main>
-    <the-footer/>
+    <the-footer />
   </div>
 </template>
 
