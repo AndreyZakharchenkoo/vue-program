@@ -10,7 +10,7 @@ const lazyLoadImg = {
             imageElement.addEventListener('load', () => {
               el.classList.add('loaded')
             })
-            imageElement.addEventListener('error', () => console.log('error'))
+            imageElement.addEventListener('error', () => console.error('Some error with img path'))
             imageElement.src = imageElement.dataset.src
           }
         }

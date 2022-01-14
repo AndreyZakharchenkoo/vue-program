@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import TheInput from '@/stories/TheInput.vue'
 import TheButton from '@/stories/TheButton.vue'
 import TheCard from '@/stories/TheCard.vue'
@@ -67,7 +67,13 @@ export default {
     TheCard,
     ThePlaceholder
   },
-  mounted () {
+  async mounted () {
+    await this.FETCH_FILMS()
+      .then(() => {})
+      .catch((err) => {
+        console.error(err)
+      })
+
     this.searchValue = ''
   },
   computed: {
@@ -84,6 +90,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'FETCH_FILMS'
+    ]),
     ...mapMutations([
       'UPDATE_SEARCH_VALUE',
       'UPDATE_SEARCH_PARAM',
@@ -91,9 +100,11 @@ export default {
     ]),
     switchActiveButton (event) {
       const buttonsGroup = event.path[1].querySelectorAll('button')
+
       buttonsGroup.forEach((elem) => {
         elem.classList.remove('active')
       })
+
       event.target.classList.add('active')
     },
     searchByParam (param, event) {

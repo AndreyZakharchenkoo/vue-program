@@ -25,7 +25,7 @@
       <p class="card__genre">{{ card.genres[0] }}</p>
       <div class="card__year">{{ year }}</div>
       <template v-if="isExtended">
-        <div class="card__rating">{{ card.vote_count }}</div>
+        <div class="card__rating">{{ card.vote_average }}</div>
         <div class="card__duration" data-test="duration">{{ duration }}</div>
         <div class="card__description">{{ card.overview }}</div>
       </template>
@@ -53,8 +53,7 @@ export default {
       return this.card.release_date.split('-')[0]
     },
     duration () {
-      const duration = this.card.duration.split(' ')
-      return (parseInt(duration[0]) * 60 + parseInt(duration[1])) + ' min'
+      return (Math.trunc(this.card.runtime / 60) + ' h ') + (this.card.runtime % 60 + ' min')
     }
   },
   methods: {
@@ -72,6 +71,12 @@ export default {
 <style scoped>
 .card {
   position: relative;
+}
+
+.card__img {
+  display: block;
+  background: url('https://www.lyon-ortho-clinic.com/files/cto_layout/img/placeholder/book.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 .card__img.loaded img {
@@ -179,7 +184,7 @@ export default {
   flex: 1;
   grid-gap: 20px;
   align-items: baseline;
-  grid-template-columns: 100px 100px 1fr 70px;
+  grid-template-columns: 100px 150px 1fr 70px;
   grid-template-areas:
     'name name name rating'
     'genre genre genre .'
