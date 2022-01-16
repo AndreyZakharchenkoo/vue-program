@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+import ApiService from '../core/api'
 
 Vue.use(Vuex)
 
@@ -9,6 +9,7 @@ export default new Vuex.Store({
     searchValue: '',
     searchParam: 'title',
     sortParam: 'date',
+    currentFilm: {},
     films: []
   },
   getters: {
@@ -36,16 +37,16 @@ export default new Vuex.Store({
           return searchedFilms
       }
     },
-    GET_FILM_BY_ID: state => id => {
-      return state.films.find(item => item.id === id)
-    },
-    GET_FILMS_BY_GENRE: state => (param, id) => {
-      return state.films.filter(item => item.genres.includes(param) && item.id !== id)
+    GET_FILMS_BY_GENRE: state => (genre, id) => {
+      return state.films.filter(item => item.genres.includes(genre) && item.id !== id)
     }
   },
   mutations: {
     SET_FILMS (state, payload) {
       state.films = payload
+    },
+    SET_CURRENT_FILM (state, payload) {
+      state.currentFilm = payload
     },
     UPDATE_SEARCH_VALUE (state, payload) {
       state.searchValue = payload
@@ -58,13 +59,24 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    FETCH_FILMS ({ commit }) {
-      axios.get('http://react-cdp-api.herokuapp.com/movies')
+    FETCH_FILMS ({ commit, state }) {
+      if (!state.films.length) {
+        ApiService.fetchFilms()
+          .then(res => {
+            commit('SET_FILMS', res.data.data)
+          })
+          .catch((err) => {
+            throw err
+          })
+      }
+    },
+    FETCH_FILM_BY_ID ({ commit }, id) {
+      ApiService.fetchFilmById(id)
         .then(res => {
-          commit('SET_FILMS', res.data.data)
+          commit('SET_CURRENT_FILM', res.data)
         })
         .catch((err) => {
-          console.error(err)
+          throw err
         })
     }
   },

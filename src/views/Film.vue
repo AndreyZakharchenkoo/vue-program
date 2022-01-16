@@ -3,6 +3,7 @@
     <section class="box-info">
       <div class="container">
         <the-card
+          v-if="currentFilm"
           :card="currentFilm"
           is-extended
         />
@@ -32,18 +33,32 @@
 
 <script>
 import TheCard from '@/stories/TheCard.vue'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Film',
   components: {
     TheCard
   },
+  async mounted () {
+    await this.FETCH_FILM_BY_ID(this.id)
+      .then(() => {})
+      .catch((err) => {
+        console.error(err)
+      })
+
+    await this.FETCH_FILMS()
+      .then(() => {})
+      .catch((err) => {
+        console.error(err)
+      })
+  },
   computed: {
+    ...mapState([
+      'currentFilm'
+    ]),
     id () {
       return +this.$route.params.id
-    },
-    currentFilm () {
-      return this.$store.getters.GET_FILM_BY_ID(this.id)
     },
     currentGenre () {
       const genres = this.currentFilm?.genres || []
@@ -52,6 +67,12 @@ export default {
     sortedFilmsByParam () {
       return this.$store.getters.GET_FILMS_BY_GENRE(this.currentGenre, this.id)
     }
+  },
+  methods: {
+    ...mapActions([
+      'FETCH_FILMS',
+      'FETCH_FILM_BY_ID'
+    ])
   }
 }
 </script>

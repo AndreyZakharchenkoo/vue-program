@@ -9,11 +9,9 @@
       :to="{ name: 'Film', params: { id: card.id }  }"
       @click.native="scrollToTop"
     />
-    <picture
-      class="card__img"
-      v-lazyload
-    >
+    <picture class="card__img">
       <img
+        v-lazyload
         width="327"
         height="590"
         :data-src="card.poster_path"
@@ -22,7 +20,7 @@
     </picture>
     <div class="card__info">
       <h3 class="card__name">{{ card.title }}</h3>
-      <p class="card__genre">{{ card.genres[0] }}</p>
+      <p class="card__genre">{{ genre }}</p>
       <div class="card__year">{{ year }}</div>
       <template v-if="isExtended">
         <div class="card__rating">{{ card.vote_average }}</div>
@@ -49,8 +47,13 @@ export default {
     }
   },
   computed: {
+    genre () {
+      const genres = this.card?.genres || []
+      return genres[0]
+    },
     year () {
-      return this.card.release_date.split('-')[0]
+      const year = this.card.release_date || ''
+      return year.split('-')[0]
     },
     duration () {
       return (Math.trunc(this.card.runtime / 60) + ' h ') + (this.card.runtime % 60 + ' min')
