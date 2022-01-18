@@ -14,8 +14,14 @@
         <div class="sort">
           <div class="sort__label">Search by</div>
           <div class="button-group">
-            <the-button class="active" @click="searchByParam('title', $event)">Title</the-button>
-            <the-button @click="searchByParam('genres', $event)">Genre</the-button>
+            <the-button
+              :class="{ 'active': searchParam === SEARCH_PARAMS.title }"
+              @click="searchByParam(SEARCH_PARAMS.title, $event)"
+            >Title</the-button>
+            <the-button
+              :class="{ 'active': searchParam === SEARCH_PARAMS.genres }"
+              @click="searchByParam(SEARCH_PARAMS.genres, $event)"
+            >Genre</the-button>
           </div>
         </div>
       </div>
@@ -27,8 +33,14 @@
           <div class="sort">
             <div class="sort__label">Sort by</div>
             <div class="button-group">
-              <the-button class="active" @click="sortByParam('date', $event)">Release date</the-button>
-              <the-button @click="sortByParam('rating', $event)">Rating</the-button>
+              <the-button
+                :class="{ 'active': sortParam === SORT_PARAMS.date }"
+                @click="sortByParam(SORT_PARAMS.date, $event)"
+              >Release date</the-button>
+              <the-button
+                :class="{ 'active': sortParam === SORT_PARAMS.rating }"
+                @click="sortByParam(SORT_PARAMS.rating, $event)"
+              >Rating</the-button>
             </div>
           </div>
         </div>
@@ -53,7 +65,8 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { SEARCH_PARAMS, SORT_PARAMS } from '../core/constants'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import TheInput from '@/stories/TheInput.vue'
 import TheButton from '@/stories/TheButton.vue'
 import TheCard from '@/stories/TheCard.vue'
@@ -76,7 +89,15 @@ export default {
 
     this.searchValue = ''
   },
+  data: () => ({
+    SEARCH_PARAMS,
+    SORT_PARAMS
+  }),
   computed: {
+    ...mapState([
+      'searchParam',
+      'sortParam'
+    ]),
     ...mapGetters({
       films: 'GET_FILMS'
     }),

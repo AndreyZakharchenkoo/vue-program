@@ -18,23 +18,18 @@ describe('ThePlaceholder.vue', () => {
       stubs: ['router-link', 'router-view'],
       propsData: {
         card: {
-          id: 353081,
-          title: 'Mission: Impossible - Fallout',
-          tagline: '',
-          vote_average: 0,
-          vote_count: 3,
-          release_date: '2018-07-26',
-          poster_path: 'https://image.tmdb.org/t/p/w500/A2W75CVz9l8gEeWhQiiftlOCkgi.jpg',
-          overview: 'The sixth installment in the "Mission: Impossible". When an IMF mission ends badly, the world is faced with dire consequences. As Ethan Hunt takes it upon himself to fulfil his original briefing, the CIA begin to question his loyalty and his motives. The IMF team find themselves in a race against time, hunted by assassins while trying to prevent a global catastrophe.',
-          budget: 0,
-          revenue: 0,
-          genres: [
-            'Adventure',
-            'Action',
-            'Thriller'
-          ],
-          duration: '1h 24min',
-          runtime: null
+          budget: 55000000,
+          genres: ['Drama', 'Romance'],
+          id: 337167,
+          overview: 'Believing they have left behind shadowy figures from their past, newlyweds Christian and Ana fully embrace an inextricable connection and shared life of luxury. But just as she steps into her role as Mrs. Grey and he relaxes into an unfamiliar stability, new threats could jeopardize their happy ending before it even begins.',
+          poster_path: 'https://image.tmdb.org/t/p/w500/3kcEGnYBHDeqmdYf8ZRbKdfmlUy.jpg',
+          release_date: '2018-02-07',
+          revenue: 136906000,
+          runtime: 106,
+          tagline: "Don't miss the climax",
+          title: 'Fifty Shades Freed',
+          vote_average: 6.1,
+          vote_count: 1195
         },
         isExtended: true
       }
@@ -42,6 +37,6 @@ describe('ThePlaceholder.vue', () => {
 
     const duration = wrapper.get('[data-test="duration"]')
 
-    expect(duration.text()).toBe('84 min')
+    expect(duration.text()).toBe('1h 46min')
   })
 })

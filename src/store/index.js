@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { SEARCH_PARAMS, SORT_PARAMS } from '../core/constants'
 import ApiService from '../core/api'
 
 Vue.use(Vuex)
@@ -7,19 +8,23 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     searchValue: '',
-    searchParam: 'title',
-    sortParam: 'date',
+    searchParam: SEARCH_PARAMS.title,
+    sortParam: SORT_PARAMS.date,
     currentFilm: {},
     films: []
   },
   getters: {
     GET_FILMS: state => {
-      if (!state.searchValue) {
+      const isEmptySearchValue = !state.searchValue
+      const sortByDate = (a, b) => (a.release_date < b.release_date ? 1 : -1)
+      const sortByVote = (a, b) => (a.vote_average < b.vote_average ? 1 : -1)
+
+      if (isEmptySearchValue) {
         switch (state.sortParam) {
-          case 'date':
-            return state.films.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
-          case 'rating':
-            return state.films.sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
+          case SORT_PARAMS.date:
+            return state.films.sort(sortByDate)
+          case SORT_PARAMS.rating:
+            return state.films.sort(sortByVote)
           default:
             return state.films
         }
@@ -29,10 +34,10 @@ export default new Vuex.Store({
         .includes(state.searchValue.toLowerCase()))
 
       switch (state.sortParam) {
-        case 'date':
-          return searchedFilms.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
-        case 'rating':
-          return searchedFilms.sort((a, b) => (a.vote_count < b.vote_count ? 1 : -1))
+        case SORT_PARAMS.date:
+          return searchedFilms.sort(sortByDate)
+        case SORT_PARAMS.rating:
+          return searchedFilms.sort(sortByVote)
         default:
           return searchedFilms
       }

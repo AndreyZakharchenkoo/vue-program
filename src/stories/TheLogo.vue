@@ -1,5 +1,10 @@
 <template>
-  <router-link to="/" class="logo" aria-label="Logo"><b>netflix</b>roulette</router-link>
+  <router-link
+    to="/"
+    class="logo"
+    aria-label="Logo">
+    <b>netflix</b>roulette
+  </router-link>
 </template>
 
 <script>

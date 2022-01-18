@@ -4,7 +4,7 @@ const lazyLoadImg = {
       inserted: el => {
         function loadImage () {
           if (el) {
-            el.addEventListener('error', () => console.error('Some error with img path'))
+            el.addEventListener('error', (err) => console.error('Incorrect path', err.srcElement.currentSrc, err))
             el.addEventListener('load', function () {
               this.parentElement.classList.add('loaded')
             })

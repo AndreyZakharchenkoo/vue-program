@@ -57,7 +57,7 @@ export default {
       return year.split('-')[0]
     },
     duration () {
-      return (Math.trunc(this.card.runtime / 60) + ' h ') + (this.card.runtime % 60 + ' min')
+      return (Math.trunc(this.card.runtime / 60) + 'h ') + (this.card.runtime % 60 + 'min')
     }
   },
   methods: {
