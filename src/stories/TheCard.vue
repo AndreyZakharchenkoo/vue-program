@@ -16,6 +16,7 @@
         height="590"
         :data-src="card.poster_path"
         :alt="card.title"
+        :key="card.poster_path"
       >
     </picture>
     <div class="card__info">

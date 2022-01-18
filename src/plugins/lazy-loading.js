@@ -1,21 +1,21 @@
-function loadImage (el) {
-  if (el) {
-    el.addEventListener('error', () => console.error('Some error with img path'))
-    el.addEventListener('load', function () {
-      this.parentElement.classList.add('loaded')
-    })
-    el.src = el.dataset.src
-  }
-}
-
 const lazyLoadImg = {
   install (Vue) {
     Vue.directive('lazyload', {
       inserted: el => {
+        function loadImage () {
+          if (el) {
+            el.addEventListener('error', () => console.error('Some error with img path'))
+            el.addEventListener('load', function () {
+              this.parentElement.classList.add('loaded')
+            })
+            el.src = el.dataset.src
+          }
+        }
+
         function handleIntersect (entries, observer) {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              loadImage(el)
+              loadImage()
               observer.unobserve(el)
             }
           })
@@ -33,11 +33,8 @@ const lazyLoadImg = {
         if (window.IntersectionObserver) {
           createObserver()
         } else {
-          loadImage(el)
+          loadImage()
         }
-      },
-      update: el => {
-        loadImage(el)
       }
     })
   }
