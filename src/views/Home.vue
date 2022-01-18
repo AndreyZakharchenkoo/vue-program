@@ -17,11 +17,15 @@
             <the-button
               :class="{ 'active': searchParam === SEARCH_PARAMS.title }"
               @click="searchByParam(SEARCH_PARAMS.title, $event)"
-            >Title</the-button>
+            >
+              Title
+            </the-button>
             <the-button
               :class="{ 'active': searchParam === SEARCH_PARAMS.genres }"
               @click="searchByParam(SEARCH_PARAMS.genres, $event)"
-            >Genre</the-button>
+            >
+              Genre
+            </the-button>
           </div>
         </div>
       </div>
@@ -29,18 +33,27 @@
     <section class="box-gallery">
       <div class="box-gallery__top">
         <div class="container">
-          <div v-if="films.length && searchValue" class="quantity">{{ films.length }} movie found</div>
+          <div
+            v-if="films.length && searchValue"
+            class="quantity"
+          >
+            {{ films.length }} movie found
+          </div>
           <div class="sort">
             <div class="sort__label">Sort by</div>
             <div class="button-group">
               <the-button
                 :class="{ 'active': sortParam === SORT_PARAMS.date }"
                 @click="sortByParam(SORT_PARAMS.date, $event)"
-              >Release date</the-button>
+              >
+                Release date
+              </the-button>
               <the-button
                 :class="{ 'active': sortParam === SORT_PARAMS.rating }"
                 @click="sortByParam(SORT_PARAMS.rating, $event)"
-              >Rating</the-button>
+              >
+                Rating
+              </the-button>
             </div>
           </div>
         </div>
@@ -65,12 +78,14 @@
 </template>
 
 <script>
-import { SEARCH_PARAMS, SORT_PARAMS } from '../core/constants'
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import TheInput from '@/stories/TheInput.vue'
-import TheButton from '@/stories/TheButton.vue'
-import TheCard from '@/stories/TheCard.vue'
-import ThePlaceholder from '@/stories/ThePlaceholder.vue'
+import {
+  mapState, mapGetters, mapMutations, mapActions,
+} from 'vuex';
+import { SEARCH_PARAMS, SORT_PARAMS } from '../core/constants';
+import TheInput from '@/stories/TheInput.vue';
+import TheButton from '@/stories/TheButton.vue';
+import TheCard from '@/stories/TheCard.vue';
+import ThePlaceholder from '@/stories/ThePlaceholder.vue';
 
 export default {
   name: 'Home',
@@ -78,66 +93,66 @@ export default {
     TheButton,
     TheInput,
     TheCard,
-    ThePlaceholder
+    ThePlaceholder,
   },
-  async mounted () {
+  async mounted() {
     await this.FETCH_FILMS()
       .then(() => {})
       .catch((err) => {
-        console.error(err)
-      })
+        console.error(err);
+      });
 
-    this.searchValue = ''
+    this.searchValue = '';
   },
   data: () => ({
     SEARCH_PARAMS,
-    SORT_PARAMS
+    SORT_PARAMS,
   }),
   computed: {
     ...mapState([
       'searchParam',
-      'sortParam'
+      'sortParam',
     ]),
     ...mapGetters({
-      films: 'GET_FILMS'
+      films: 'GET_FILMS',
     }),
     searchValue: {
-      get () {
-        return this.$store.state.searchValue
+      get() {
+        return this.$store.state.searchValue;
       },
-      set (val) {
-        this.UPDATE_SEARCH_VALUE(val)
-      }
-    }
+      set(val) {
+        this.UPDATE_SEARCH_VALUE(val);
+      },
+    },
   },
   methods: {
     ...mapActions([
-      'FETCH_FILMS'
+      'FETCH_FILMS',
     ]),
     ...mapMutations([
       'UPDATE_SEARCH_VALUE',
       'UPDATE_SEARCH_PARAM',
-      'UPDATE_SORT_PARAM'
+      'UPDATE_SORT_PARAM',
     ]),
-    switchActiveButton (event) {
-      const buttonsGroup = event.path[1].querySelectorAll('button')
+    switchActiveButton(event) {
+      const buttonsGroup = event.path[1].querySelectorAll('button');
 
       buttonsGroup.forEach((elem) => {
-        elem.classList.remove('active')
-      })
+        elem.classList.remove('active');
+      });
 
-      event.target.classList.add('active')
+      event.target.classList.add('active');
     },
-    searchByParam (param, event) {
-      this.switchActiveButton(event)
-      this.UPDATE_SEARCH_PARAM(param)
+    searchByParam(param, event) {
+      this.switchActiveButton(event);
+      this.UPDATE_SEARCH_PARAM(param);
     },
-    sortByParam (param, event) {
-      this.switchActiveButton(event)
-      this.UPDATE_SORT_PARAM(param)
-    }
-  }
-}
+    sortByParam(param, event) {
+      this.switchActiveButton(event);
+      this.UPDATE_SORT_PARAM(param);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

@@ -9,8 +9,8 @@
 
 <script>
 export default {
-  name: 'TheLogo'
-}
+  name: 'TheLogo',
+};
 </script>
 
 <style scoped>

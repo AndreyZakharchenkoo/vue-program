@@ -13,19 +13,19 @@
 export default {
   name: 'Button',
   data: () => ({
-    class: 'large'
+    class: 'large',
   }),
   props: {
     type: {
       type: String,
-      default: 'button'
+      default: 'button',
     },
     isLarge: {
       type: Boolean,
-      default: false
-    }
-  }
-}
+      default: false,
+    },
+  },
+};
 </script>
 
 <style scoped>

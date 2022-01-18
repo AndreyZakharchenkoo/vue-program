@@ -7,14 +7,14 @@
 </template>
 
 <script>
-import TheLogo from '@/stories/TheLogo.vue'
+import TheLogo from '@/stories/TheLogo.vue';
 
 export default {
   name: 'TheFooter',
   components: {
-    TheLogo
-  }
-}
+    TheLogo,
+  },
+};
 </script>
 
 <style lang="scss" scoped>

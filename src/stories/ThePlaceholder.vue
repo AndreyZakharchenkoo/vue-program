@@ -11,10 +11,10 @@ export default {
     title: {
       type: String,
       required: true,
-      default: 'No items found'
-    }
-  }
-}
+      default: 'No items found',
+    },
+  },
+};
 </script>
 
 <style scoped>

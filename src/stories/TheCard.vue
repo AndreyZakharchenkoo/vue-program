@@ -40,36 +40,36 @@ export default {
     card: {
       type: Object,
       required: true,
-      default: () => ({})
+      default: () => ({}),
     },
     isExtended: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    genre () {
-      const genres = this.card?.genres || []
-      return genres[0]
+    genre() {
+      const genres = this.card?.genres || [];
+      return genres[0];
     },
-    year () {
-      const year = this.card.release_date || ''
-      return year.split('-')[0]
+    year() {
+      const year = this.card.release_date || '';
+      return year.split('-')[0];
     },
-    duration () {
-      return (Math.trunc(this.card.runtime / 60) + 'h ') + (this.card.runtime % 60 + 'min')
-    }
+    duration() {
+      return `${Math.trunc(this.card.runtime / 60)}h ${this.card.runtime % 60}min`;
+    },
   },
   methods: {
-    scrollToTop () {
+    scrollToTop() {
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: 'smooth'
-      })
-    }
-  }
-}
+        behavior: 'smooth',
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>

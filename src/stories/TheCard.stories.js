@@ -1,17 +1,17 @@
-import TheCard from './TheCard.vue'
+import TheCard from './TheCard.vue';
 
 export default {
   component: TheCard,
-  title: 'Components/Card'
-}
+  title: 'Components/Card',
+};
 
 const Template = (args, { argTypes }) => ({
   components: { TheCard },
   props: Object.keys(argTypes),
-  template: '<the-card v-bind="$props" />'
-})
+  template: '<the-card v-bind="$props" />',
+});
 
-export const Primary = Template.bind({})
+export const Primary = Template.bind({});
 Primary.args = {
   card: {
     id: 353081,
@@ -27,13 +27,13 @@ Primary.args = {
     genres: [
       'Adventure',
       'Action',
-      'Thriller'
+      'Thriller',
     ],
-    runtime: null
-  }
-}
+    runtime: null,
+  },
+};
 
-export const Extended = Template.bind({})
+export const Extended = Template.bind({});
 Extended.args = {
   card: {
     id: 353081,
@@ -49,9 +49,9 @@ Extended.args = {
     genres: [
       'Adventure',
       'Action',
-      'Thriller'
+      'Thriller',
     ],
-    runtime: null
+    runtime: null,
   },
-  isExtended: true
-}
+  isExtended: true,
+};

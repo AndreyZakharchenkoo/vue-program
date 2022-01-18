@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import TheLogo from '@/stories/TheLogo.vue'
+import TheLogo from '@/stories/TheLogo.vue';
 
 export default {
   name: 'TheHeader',
   components: {
-    TheLogo
-  }
-}
+    TheLogo,
+  },
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils'
-import TheCard from '@/stories/TheCard.vue'
+import { createLocalVue, shallowMount } from '@vue/test-utils';
+import TheCard from '@/stories/TheCard.vue';
 
 /*
  * NOTE:
@@ -7,9 +7,10 @@ import TheCard from '@/stories/TheCard.vue'
  * For correct test executing
  */
 
-import lazyLoadImg from '@/plugins/lazy-loading.js'
-const localVue = createLocalVue()
-localVue.use(lazyLoadImg)
+import lazyLoadImg from '@/plugins/lazy-loading';
+
+const localVue = createLocalVue();
+localVue.use(lazyLoadImg);
 
 describe('ThePlaceholder.vue', () => {
   it('Check correct duration transformation', () => {
@@ -29,14 +30,14 @@ describe('ThePlaceholder.vue', () => {
           tagline: "Don't miss the climax",
           title: 'Fifty Shades Freed',
           vote_average: 6.1,
-          vote_count: 1195
+          vote_count: 1195,
         },
-        isExtended: true
-      }
-    })
+        isExtended: true,
+      },
+    });
 
-    const duration = wrapper.get('[data-test="duration"]')
+    const duration = wrapper.get('[data-test="duration"]');
 
-    expect(duration.text()).toBe('1h 46min')
-  })
-})
+    expect(duration.text()).toBe('1h 46min');
+  });
+});

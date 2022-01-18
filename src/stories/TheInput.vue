@@ -14,20 +14,18 @@ export default {
   props: ['value'],
   inheritAttrs: true,
   computed: {
-    inputListeners: function () {
-      const vm = this
+    inputListeners() {
+      const vm = this;
 
-      return Object.assign({},
-        this.$listeners,
-        {
-          input: function (event) {
-            vm.$emit('input', event.target.value)
-          }
-        }
-      )
-    }
-  }
-}
+      return {
+        ...this.$listeners,
+        input(event) {
+          vm.$emit('input', event.target.value);
+        },
+      };
+    },
+  },
+};
 </script>
 
 <style scoped>

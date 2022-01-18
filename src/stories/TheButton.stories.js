@@ -1,20 +1,20 @@
-import TheButton from './TheButton.vue'
+import TheButton from './TheButton.vue';
 
 export default {
   component: TheButton,
-  title: 'Components/Button'
-}
+  title: 'Components/Button',
+};
 
 const Template = (args, { argTypes }) => ({
   components: { TheButton },
   props: Object.keys(argTypes),
-  template: '<the-button v-bind="$props" v-on="$props">Button</the-button>'
-})
+  template: '<the-button v-bind="$props" v-on="$props">Button</the-button>',
+});
 
-export const Primary = Template.bind({})
-Primary.args = {}
+export const Primary = Template.bind({});
+Primary.args = {};
 
-export const Large = Template.bind({})
+export const Large = Template.bind({});
 Large.args = {
-  isLarge: true
-}
+  isLarge: true,
+};

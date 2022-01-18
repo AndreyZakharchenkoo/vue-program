@@ -4,12 +4,12 @@ module.exports = {
       .use('file-loader')
       .loader('image-webpack-loader')
       .tap((options) => {
-        const ret = options || {}
+        const ret = options || {};
         ret.pngquant = {
           quality: [0.65, 0.90],
-          speed: 4
-        }
-        return ret
-      })
-  }
-}
+          speed: 4,
+        };
+        return ret;
+      });
+  },
+};

@@ -1,11 +1,11 @@
-import ThePlaceholder from './ThePlaceholder.vue'
+import ThePlaceholder from './ThePlaceholder.vue';
 
 export default {
   component: ThePlaceholder,
-  title: 'Components/Placeholder'
-}
+  title: 'Components/Placeholder',
+};
 
 export const Default = () => ({
   components: { ThePlaceholder },
-  template: '<the-placeholder title="No items found" />'
-})
+  template: '<the-placeholder title="No items found" />',
+});

@@ -32,49 +32,49 @@
 </template>
 
 <script>
-import TheCard from '@/stories/TheCard.vue'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex';
+import TheCard from '@/stories/TheCard.vue';
 
 export default {
   name: 'Film',
   components: {
-    TheCard
+    TheCard,
   },
-  async mounted () {
+  async mounted() {
     await this.FETCH_FILM_BY_ID(this.id)
       .then(() => {})
       .catch((err) => {
-        console.error(err)
-      })
+        console.error(err);
+      });
 
     await this.FETCH_FILMS()
       .then(() => {})
       .catch((err) => {
-        console.error(err)
-      })
+        console.error(err);
+      });
   },
   computed: {
     ...mapState([
-      'currentFilm'
+      'currentFilm',
     ]),
-    id () {
-      return +this.$route.params.id
+    id() {
+      return +this.$route.params.id;
     },
-    currentGenre () {
-      const genres = this.currentFilm?.genres || []
-      return genres[0]
+    currentGenre() {
+      const genres = this.currentFilm?.genres || [];
+      return genres[0];
     },
-    sortedFilmsByParam () {
-      return this.$store.getters.GET_FILMS_BY_GENRE(this.currentGenre, this.id)
-    }
+    sortedFilmsByParam() {
+      return this.$store.getters.GET_FILMS_BY_GENRE(this.currentGenre, this.id);
+    },
   },
   methods: {
     ...mapActions([
       'FETCH_FILMS',
-      'FETCH_FILM_BY_ID'
-    ])
-  }
-}
+      'FETCH_FILM_BY_ID',
+    ]),
+  },
+};
 </script>
 
 <style lang="scss" scoped>
