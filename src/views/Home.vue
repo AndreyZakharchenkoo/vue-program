@@ -7,7 +7,11 @@
           class="search"
           @submit.prevent>
           <div class="search__input">
-            <the-input placeholder="Search" v-model.trim="searchValue" />
+            <the-input
+              placeholder="Search"
+              v-model.trim="searchValue"
+              @input="searchFilmsWithDelay"
+            />
           </div>
           <the-button type="submit" class="large">Search</the-button>
         </form>
@@ -16,13 +20,13 @@
           <div class="button-group">
             <the-button
               :class="{ 'active': searchParam === SEARCH_PARAMS.title }"
-              @click="searchByParam(SEARCH_PARAMS.title, $event)"
+              @click="changeParam(SEARCH_PARAMS.title, true, $event)"
             >
               Title
             </the-button>
             <the-button
               :class="{ 'active': searchParam === SEARCH_PARAMS.genres }"
-              @click="searchByParam(SEARCH_PARAMS.genres, $event)"
+              @click="changeParam(SEARCH_PARAMS.genres, true, $event)"
             >
               Genre
             </the-button>
@@ -44,13 +48,13 @@
             <div class="button-group">
               <the-button
                 :class="{ 'active': sortParam === SORT_PARAMS.date }"
-                @click="sortByParam(SORT_PARAMS.date, $event)"
+                @click="changeParam(SORT_PARAMS.date, false, $event)"
               >
                 Release date
               </the-button>
               <the-button
                 :class="{ 'active': sortParam === SORT_PARAMS.rating }"
-                @click="sortByParam(SORT_PARAMS.rating, $event)"
+                @click="changeParam(SORT_PARAMS.rating, false, $event)"
               >
                 Rating
               </the-button>
@@ -78,9 +82,8 @@
 </template>
 
 <script>
-import {
-  mapState, mapGetters, mapMutations, mapActions,
-} from 'vuex';
+import { debounce } from 'lodash';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import { SEARCH_PARAMS, SORT_PARAMS } from '../core/constants';
 import TheInput from '@/stories/TheInput.vue';
 import TheButton from '@/stories/TheButton.vue';
@@ -95,14 +98,8 @@ export default {
     TheCard,
     ThePlaceholder,
   },
-  async mounted() {
-    await this.FETCH_FILMS()
-      .then(() => {})
-      .catch((err) => {
-        console.error(err);
-      });
-
-    this.searchValue = '';
+  mounted() {
+    this.fetchFilmsByParams();
   },
   data: () => ({
     SEARCH_PARAMS,
@@ -110,12 +107,10 @@ export default {
   }),
   computed: {
     ...mapState([
+      'films',
       'searchParam',
       'sortParam',
     ]),
-    ...mapGetters({
-      films: 'GET_FILMS',
-    }),
     searchValue: {
       get() {
         return this.$store.state.searchValue;
@@ -127,13 +122,24 @@ export default {
   },
   methods: {
     ...mapActions([
-      'FETCH_FILMS',
+      'FETCH_FILMS_BY_PARAMS',
     ]),
     ...mapMutations([
       'UPDATE_SEARCH_VALUE',
       'UPDATE_SEARCH_PARAM',
       'UPDATE_SORT_PARAM',
     ]),
+    changeParam(param, isSearchParam, event) {
+      this.switchActiveButton(event);
+
+      if (isSearchParam) {
+        this.UPDATE_SEARCH_PARAM(param);
+      } else {
+        this.UPDATE_SORT_PARAM(param);
+      }
+
+      this.fetchFilmsByParams();
+    },
     switchActiveButton(event) {
       const buttonsGroup = event.path[1].querySelectorAll('button');
 
@@ -143,13 +149,21 @@ export default {
 
       event.target.classList.add('active');
     },
-    searchByParam(param, event) {
-      this.switchActiveButton(event);
-      this.UPDATE_SEARCH_PARAM(param);
-    },
-    sortByParam(param, event) {
-      this.switchActiveButton(event);
-      this.UPDATE_SORT_PARAM(param);
+    // eslint-disable-next-line func-names
+    searchFilmsWithDelay: debounce(function () {
+      this.fetchFilmsByParams();
+    }, 300),
+    async fetchFilmsByParams() {
+      await this.FETCH_FILMS_BY_PARAMS({
+        limit: 9,
+        searchBy: this.searchParam,
+        searchVal: this.searchValue,
+        sortBy: this.sortParam,
+      })
+        .then(() => {})
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
 };

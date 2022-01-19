@@ -5,8 +5,18 @@ const ApiService = {
     axios.defaults.baseURL = 'http://react-cdp-api.herokuapp.com/';
   },
 
-  fetchFilms() {
-    return axios.get('movies');
+  fetchFilmsByParams(params) {
+    let query = `movies?limit=${+params.limit}`;
+    if (params.searchBy) query += `&searchBy=${params.searchBy}`;
+    if (params.searchVal) query += `&search=${params.searchVal}`;
+    if (params.sortBy) query += `&sortBy=${params.sortBy}`;
+    if (params.searchVal) {
+      query += '&sortOrder=asc';
+    } else {
+      query += '&sortOrder=desc';
+    }
+
+    return axios.get(query);
   },
 
   fetchFilmById(id) {

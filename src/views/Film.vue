@@ -17,15 +17,22 @@
       </div>
       <div class="container">
         <h2 hidden>Films gallery</h2>
-        <ul class="gallery">
+        <ul
+          v-if="films.length"
+          class="gallery"
+        >
           <li
             class="post__item"
-            v-for="item in sortedFilmsByParam"
+            v-for="item in films"
             :key="item.id"
           >
             <the-card :card="item" />
           </li>
         </ul>
+        <the-placeholder
+          v-else
+          title="No films found"
+        />
       </div>
     </section>
   </div>
@@ -33,21 +40,18 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import { SEARCH_PARAMS } from '../core/constants';
 import TheCard from '@/stories/TheCard.vue';
+import ThePlaceholder from '@/stories/ThePlaceholder.vue';
 
 export default {
   name: 'Film',
   components: {
     TheCard,
+    ThePlaceholder,
   },
   async mounted() {
     await this.FETCH_FILM_BY_ID(this.id)
-      .then(() => {})
-      .catch((err) => {
-        console.error(err);
-      });
-
-    await this.FETCH_FILMS()
       .then(() => {})
       .catch((err) => {
         console.error(err);
@@ -56,23 +60,37 @@ export default {
   computed: {
     ...mapState([
       'currentFilm',
+      'films',
     ]),
     id() {
       return +this.$route.params.id;
     },
     currentGenre() {
-      const genres = this.currentFilm?.genres || [];
+      const genres = this.currentFilm.genres || [];
       return genres[0];
     },
-    sortedFilmsByParam() {
-      return this.$store.getters.GET_FILMS_BY_GENRE(this.currentGenre, this.id);
+  },
+  watch: {
+    currentGenre() {
+      this.fetchFilmsByParams();
     },
   },
   methods: {
     ...mapActions([
-      'FETCH_FILMS',
       'FETCH_FILM_BY_ID',
+      'FETCH_FILMS_BY_PARAMS',
     ]),
+    fetchFilmsByParams() {
+      this.FETCH_FILMS_BY_PARAMS({
+        limit: 9,
+        searchBy: SEARCH_PARAMS.genres,
+        searchVal: this.currentGenre,
+      })
+        .then(() => {})
+        .catch((err) => {
+          console.error(err);
+        });
+    },
   },
 };
 </script>

@@ -4,8 +4,8 @@ const SEARCH_PARAMS = {
 };
 
 const SORT_PARAMS = {
-  date: 'date',
-  rating: 'rating',
+  date: 'release_date',
+  rating: 'vote_average',
 };
 
 export {
