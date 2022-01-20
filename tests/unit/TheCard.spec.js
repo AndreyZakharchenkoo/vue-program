@@ -13,8 +13,10 @@ const localVue = createLocalVue();
 localVue.use(lazyLoadImg);
 
 describe('ThePlaceholder.vue', () => {
-  it('Check correct duration transformation', () => {
-    const wrapper = shallowMount(TheCard, {
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallowMount(TheCard, {
       localVue,
       stubs: ['router-link', 'router-view'],
       propsData: {
@@ -35,9 +37,18 @@ describe('ThePlaceholder.vue', () => {
         isExtended: true,
       },
     });
+  });
 
-    const duration = wrapper.get('[data-test="duration"]');
+  afterEach(() => {
+    wrapper.destroy();
+  });
 
+  it('Check correct duration transformation', () => {
+    const duration = wrapper.get('[data-aqa="duration"]');
     expect(duration.text()).toBe('1h 46min');
+  });
+
+  it('Renders correctly', () => {
+    expect(wrapper.vm.$el).toMatchSnapshot();
   });
 });

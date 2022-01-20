@@ -1,21 +1,17 @@
 import { shallowMount } from '@vue/test-utils';
-import TheLogo from '@/stories/TheLogo.vue';
+import TheHeader from '@/components/TheHeader.vue';
 
-describe('TheLogo.vue', () => {
+describe('TheHeader.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(TheLogo, {
+    wrapper = shallowMount(TheHeader, {
       stubs: ['router-link', 'router-view'],
     });
   });
 
   afterEach(() => {
     wrapper.destroy();
-  });
-
-  it('Displays default logo text', () => {
-    expect(wrapper.text()).toContain('netflix');
   });
 
   it('Renders correctly', () => {

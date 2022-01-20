@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Film.vue Renders correctly 1`] = `
+<div>
+  <section
+    class="box-info"
+  >
+    <div
+      class="container"
+    >
+      <the-card-stub
+        card="[object Object]"
+        isextended="true"
+      />
+    </div>
+  </section>
+   
+  <section
+    class="box-gallery"
+  >
+    <div
+      class="box-gallery__top"
+    >
+      <div
+        class="container"
+      >
+        <h2>
+          Films by Mystery genre
+        </h2>
+      </div>
+    </div>
+     
+    <div
+      class="container"
+    >
+      <h2
+        hidden="hidden"
+      >
+        Films gallery
+      </h2>
+       
+      <ul
+        class="gallery"
+      >
+        <li
+          class="post__item"
+        >
+          <the-card-stub
+            card="[object Object]"
+          />
+        </li>
+        <li
+          class="post__item"
+        >
+          <the-card-stub
+            card="[object Object]"
+          />
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>
+`;

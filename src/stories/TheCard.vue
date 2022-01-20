@@ -24,8 +24,8 @@
       <p class="card__genre">{{ genre }}</p>
       <div class="card__year">{{ year }}</div>
       <template v-if="isExtended">
-        <div class="card__rating">{{ card.vote_average }}</div>
-        <div class="card__duration" data-test="duration">{{ duration }}</div>
+        <div v-if="card.vote_average" class="card__rating">{{ card.vote_average }}</div>
+        <div v-if="card.runtime" class="card__duration" data-aqa="duration">{{ duration }}</div>
         <div class="card__description">{{ card.overview }}</div>
       </template>
     </div>

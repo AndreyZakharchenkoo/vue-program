@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ThePlaceholder.vue Renders correctly 1`] = `
+<div
+  class="card extended"
+>
+  <!---->
+   
+  <picture
+    class="card__img"
+  >
+    <img
+      alt="Fifty Shades Freed"
+      data-src="https://image.tmdb.org/t/p/w500/3kcEGnYBHDeqmdYf8ZRbKdfmlUy.jpg"
+      height="590"
+      src="https://image.tmdb.org/t/p/w500/3kcEGnYBHDeqmdYf8ZRbKdfmlUy.jpg"
+      width="327"
+    />
+  </picture>
+   
+  <div
+    class="card__info"
+  >
+    <h3
+      class="card__name"
+    >
+      Fifty Shades Freed
+    </h3>
+     
+    <p
+      class="card__genre"
+    >
+      Drama
+    </p>
+     
+    <div
+      class="card__year"
+    >
+      2018
+    </div>
+     
+    <div
+      class="card__rating"
+    >
+      6.1
+    </div>
+     
+    <div
+      class="card__duration"
+      data-aqa="duration"
+    >
+      1h 46min
+    </div>
+     
+    <div
+      class="card__description"
+    >
+      Believing they have left behind shadowy figures from their past, newlyweds Christian and Ana fully embrace an inextricable connection and shared life of luxury. But just as she steps into her role as Mrs. Grey and he relaxes into an unfamiliar stability, new threats could jeopardize their happy ending before it even begins.
+    </div>
+  </div>
+</div>
+`;

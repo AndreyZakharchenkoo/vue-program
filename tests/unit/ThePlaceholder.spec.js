@@ -2,13 +2,26 @@ import { shallowMount } from '@vue/test-utils';
 import ThePlaceholder from '@/stories/ThePlaceholder.vue';
 
 describe('ThePlaceholder.vue', () => {
-  it('Displays default placeholder', () => {
+  let wrapper;
+
+  beforeEach(() => {
     const text = 'default placeholder';
-    const wrapper = shallowMount(ThePlaceholder, {
+    wrapper = shallowMount(ThePlaceholder, {
       propsData: {
         title: text,
       },
     });
-    expect(wrapper.props().title).toBe(text);
+  });
+
+  afterEach(() => {
+    wrapper.destroy();
+  });
+
+  it('Displays default placeholder', () => {
+    expect(wrapper.props().title).toBe('default placeholder');
+  });
+
+  it('Renders correctly', () => {
+    expect(wrapper.vm.$el).toMatchSnapshot();
   });
 });
