@@ -82,7 +82,7 @@ export default {
     ]),
     fetchFilmsByParams() {
       this.FETCH_FILMS_BY_PARAMS({
-        limit: 2,
+        limit: 9,
         searchBy: SEARCH_PARAMS.genres,
         searchVal: this.currentGenre,
       })
