@@ -1,19 +1,25 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import Home from '@/pages/home.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home,
   },
   {
-    path: '/film/:id',
+    path: '/film/:id(\\d+)',
     name: 'Film',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Film.vue'),
+    props: true,
+    component: () => import(/* webpackChunkName: "about" */ '@/pages/film.vue'),
+  },
+  {
+    path: '*',
+    name: 'error',
+    component: () => import('@/pages/error.vue'),
   },
 ];
 

@@ -99,6 +99,14 @@ export default {
     ThePlaceholder,
   },
   mounted() {
+    const { searchVal, searchBy, sortBy } = this.$route.query;
+
+    if (searchVal) {
+      this.searchValue = searchVal;
+      this.UPDATE_SEARCH_PARAM(searchBy);
+      this.UPDATE_SORT_PARAM(sortBy);
+    }
+
     this.fetchFilmsByParams();
   },
   data: () => ({
@@ -106,14 +114,14 @@ export default {
     SORT_PARAMS,
   }),
   computed: {
-    ...mapState([
-      'films',
-      'searchParam',
-      'sortParam',
-    ]),
+    ...mapState({
+      films: (state) => state.films.films,
+      sortParam: (state) => state.films.sortParam,
+      searchParam: (state) => state.films.searchParam,
+    }),
     searchValue: {
       get() {
-        return this.$store.state.searchValue;
+        return this.$store.state.films.searchValue;
       },
       set(val) {
         this.UPDATE_SEARCH_VALUE(val);
@@ -154,16 +162,33 @@ export default {
       this.fetchFilmsByParams();
     }, 300),
     async fetchFilmsByParams() {
-      await this.FETCH_FILMS_BY_PARAMS({
+      const params = {
         limit: 9,
-        searchBy: this.searchParam,
         searchVal: this.searchValue,
+        searchBy: this.searchParam,
         sortBy: this.sortParam,
-      })
-        .then(() => {})
+      };
+
+      await this.FETCH_FILMS_BY_PARAMS(params)
+        .then(() => {
+          this.addParamsToQuery(params);
+        })
         .catch((err) => {
           console.error(err);
         });
+    },
+    addParamsToQuery(params) {
+      // eslint-disable-next-line no-restricted-globals
+      history.pushState(
+        {},
+        null,
+        `${this.$route.path}?${
+          Object.keys(params)
+            .map((key) => (
+              `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+            ))
+            .join('&')}`,
+      );
     },
   },
 };

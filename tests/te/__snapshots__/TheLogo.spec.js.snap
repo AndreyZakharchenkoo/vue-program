@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TheLogo.vue Renders correctly 1`] = `
+<router-link-stub
+  aria-label="Logo"
+  class="logo"
+  to="/"
+>
+  <b>
+    netflix
+  </b>
+  roulette
+
+</router-link-stub>
+`;

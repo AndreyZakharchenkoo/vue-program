@@ -1,8 +1,8 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-import Film from '@/views/Film.vue';
 import lazyLoadImg from '@/plugins/lazy-loading';
+import Film from '@/views/Film.vue';
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);

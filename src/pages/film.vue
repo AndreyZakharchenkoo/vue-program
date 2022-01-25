@@ -57,14 +57,12 @@ export default {
         console.error(err);
       });
   },
+  props: ['id'],
   computed: {
-    ...mapState([
-      'currentFilm',
-      'films',
-    ]),
-    id() {
-      return +this.$route.params.id;
-    },
+    ...mapState({
+      currentFilm: (state) => state.films.currentFilm,
+      films: (state) => state.films.films,
+    }),
     currentGenre() {
       const genres = this.currentFilm.genres || [];
       return genres[0];
