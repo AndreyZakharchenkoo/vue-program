@@ -8,11 +8,16 @@ export default {
     sortParam: SORT_PARAMS.date,
     currentFilm: {},
     films: [],
+    totalFoundedFilms: 0,
+    offset: 0,
   },
   getters: {},
   mutations: {
     SET_FILMS(state, payload) {
       state.films = payload;
+    },
+    SET_TOTAL_FOUNDED_FILMS(state, payload) {
+      state.totalFoundedFilms = payload;
     },
     SET_CURRENT_FILM(state, payload) {
       state.currentFilm = payload;
@@ -26,12 +31,16 @@ export default {
     UPDATE_SORT_PARAM(state, payload) {
       state.sortParam = payload;
     },
+    UPDATE_OFFSET(state, payload) {
+      state.offset = payload;
+    },
   },
   actions: {
     FETCH_FILMS_BY_PARAMS({ commit }, params) {
       ApiService.fetchFilmsByParams(params)
         .then((res) => {
           commit('SET_FILMS', res.data.data);
+          commit('SET_TOTAL_FOUNDED_FILMS', res.data.total);
         })
         .catch((err) => {
           throw err;

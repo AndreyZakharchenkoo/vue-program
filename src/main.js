@@ -6,6 +6,7 @@ import store from './store';
 import lazyLoadImg from './plugins/lazy-loading';
 import ApiService from './core/api';
 import '@/assets/main.scss';
+// import 'vue-pagination-tw/styles';
 
 Vue.config.productionTip = false;
 Vue.use(lazyLoadImg);

@@ -2,7 +2,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import lazyLoadImg from '@/plugins/lazy-loading';
-import Film from '@/views/Film.vue';
+import Film from '@/pages/film.vue';
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);
@@ -15,7 +15,7 @@ describe('Film.vue', () => {
   let state;
   let actions;
   const fetchFilmByIdMock = jest.fn();
-  const fetchFilmsByParams = jest.fn();
+  const fetchFilmsByParamsMock = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -35,7 +35,7 @@ describe('Film.vue', () => {
     // store
     actions = {
       FETCH_FILM_BY_ID: fetchFilmByIdMock,
-      FETCH_FILMS_BY_PARAMS: fetchFilmsByParams,
+      FETCH_FILMS_BY_PARAMS: fetchFilmsByParamsMock,
     };
     state = {
       currentFilm: {

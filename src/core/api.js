@@ -6,10 +6,11 @@ const ApiService = {
   },
 
   fetchFilmsByParams(params) {
-    let query = `movies?limit=${+params.limit}`;
+    let query = `movies?limit=${params.limit}`;
     if (params.searchBy) query += `&searchBy=${params.searchBy}`;
     if (params.searchVal) query += `&search=${params.searchVal}`;
     if (params.sortBy) query += `&sortBy=${params.sortBy}`;
+    if (params.offset) query += `&offset=${params.offset}`;
     if (params.searchVal) {
       query += '&sortOrder=asc';
     } else {

@@ -38,10 +38,10 @@
       <div class="box-gallery__top">
         <div class="container">
           <div
-            v-if="films.length && searchValue"
+            v-if="searchValue"
             class="quantity"
           >
-            {{ films.length }} movie found
+            {{ totalFoundedFilms }} movie found
           </div>
           <div class="sort">
             <div class="sort__label">Sort by</div>
@@ -63,15 +63,22 @@
         </div>
       </div>
       <div class="container">
-        <ul v-if="films.length" class="gallery">
-          <li
-            class="post__item"
-            v-for="item in films"
-            :key="item.id"
-          >
-            <the-card :card="item" />
-          </li>
-        </ul>
+        <template v-if="films.length" >
+          <ul class="gallery">
+            <li
+              class="post__item"
+              v-for="item in films"
+              :key="item.id"
+            >
+              <the-card :card="item" />
+            </li>
+          </ul>
+          <the-pagination
+            :current-page="currentPage"
+            :total-pages="totalPages"
+            @pagechanged="changePage"
+          />
+        </template>
         <the-placeholder
           v-else
           title="No films found"
@@ -89,6 +96,7 @@ import TheInput from '@/stories/TheInput.vue';
 import TheButton from '@/stories/TheButton.vue';
 import TheCard from '@/stories/TheCard.vue';
 import ThePlaceholder from '@/stories/ThePlaceholder.vue';
+import ThePagination from '@/components/ThePagination.vue';
 
 export default {
   name: 'Home',
@@ -97,9 +105,13 @@ export default {
     TheInput,
     TheCard,
     ThePlaceholder,
+    ThePagination,
   },
   mounted() {
-    const { searchVal, searchBy, sortBy } = this.$route.query;
+    const {
+      searchVal, searchBy, sortBy, offset,
+    } = this.$route.query;
+    const offsetParam = offset ?? 0;
 
     if (searchVal) {
       this.searchValue = searchVal;
@@ -107,17 +119,20 @@ export default {
       this.UPDATE_SORT_PARAM(sortBy);
     }
 
+    this.UPDATE_OFFSET(offsetParam);
     this.fetchFilmsByParams();
   },
   data: () => ({
     SEARCH_PARAMS,
     SORT_PARAMS,
+    limit: 9,
   }),
   computed: {
     ...mapState({
       films: (state) => state.films.films,
       sortParam: (state) => state.films.sortParam,
       searchParam: (state) => state.films.searchParam,
+      totalFoundedFilms: (state) => state.films.totalFoundedFilms,
     }),
     searchValue: {
       get() {
@@ -126,6 +141,24 @@ export default {
       set(val) {
         this.UPDATE_SEARCH_VALUE(val);
       },
+    },
+    offset: {
+      get() {
+        return this.$store.state.films.offset;
+      },
+      set(val) {
+        this.UPDATE_OFFSET(val);
+      },
+    },
+    currentPage() {
+      if (this.offset) {
+        return Math.trunc(this.offset / this.limit) + 1;
+      }
+
+      return 1;
+    },
+    totalPages() {
+      return Math.ceil(this.totalFoundedFilms / this.limit);
     },
   },
   methods: {
@@ -136,6 +169,7 @@ export default {
       'UPDATE_SEARCH_VALUE',
       'UPDATE_SEARCH_PARAM',
       'UPDATE_SORT_PARAM',
+      'UPDATE_OFFSET',
     ]),
     changeParam(param, isSearchParam, event) {
       this.switchActiveButton(event);
@@ -163,10 +197,11 @@ export default {
     }, 300),
     async fetchFilmsByParams() {
       const params = {
-        limit: 9,
+        limit: this.limit,
         searchVal: this.searchValue,
         searchBy: this.searchParam,
         sortBy: this.sortParam,
+        offset: this.offset,
       };
 
       await this.FETCH_FILMS_BY_PARAMS(params)
@@ -189,6 +224,18 @@ export default {
             ))
             .join('&')}`,
       );
+    },
+    changePage(page) {
+      this.offset = (page - 1) * this.limit;
+      this.fetchFilmsByParams();
+      this.scrollToTop();
+    },
+    scrollToTop() {
+      window.scroll({
+        top: 415,
+        left: 0,
+        behavior: 'smooth',
+      });
     },
   },
 };
@@ -228,5 +275,9 @@ export default {
     line-height: 19px;
     text-transform: uppercase;
   }
+}
+
+.pagination {
+  margin: 20px 0 50px;
 }
 </style>
