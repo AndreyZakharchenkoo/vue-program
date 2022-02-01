@@ -64,7 +64,7 @@
       </div>
       <div class="container">
         <template v-if="films.length" >
-          <ul class="gallery">
+          <ul class="gallery post">
             <li
               class="post__item"
               v-for="item in films"

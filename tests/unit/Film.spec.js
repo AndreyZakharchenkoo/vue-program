@@ -1,4 +1,4 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import lazyLoadImg from '@/plugins/lazy-loading';
@@ -51,11 +51,15 @@ describe('Film.vue', () => {
       ],
     };
     store = new Vuex.Store({
-      state,
-      actions,
+      modules: {
+        films: {
+          state,
+          actions,
+        },
+      },
     });
 
-    wrapper = shallowMount(Film, {
+    wrapper = mount(Film, {
       localVue,
       store,
       router,
@@ -69,6 +73,10 @@ describe('Film.vue', () => {
 
   it('Renders correctly', () => {
     expect(wrapper.vm.$el).toMatchSnapshot();
+  });
+
+  it('Check the correct display data from current store', () => {
+    expect(wrapper.text()).toContain('The Maze Runner');
   });
 
   it('Action "FETCH_FILM_BY_ID" executes after component was mounted', () => {

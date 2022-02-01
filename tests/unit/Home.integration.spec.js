@@ -1,7 +1,7 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
-import films from '@/store/modules/films';
+import FilmsModule from '@/store/modules/films';
 // import filmsData from './mock-data/filmsData.json';
 import lazyLoadImg from '@/plugins/lazy-loading';
 import Home from '@/pages/home.vue';
@@ -28,12 +28,11 @@ describe('Home.vue', () => {
         },
       ],
     });
-    // router.push('http://localhost:8080/?limit=9&searchVal=&searchBy=title&sortBy=release_date&offset=0');
 
     // store
     store = new Vuex.Store({
       modules: {
-        films,
+        films: FilmsModule,
       },
     });
 
@@ -43,6 +42,7 @@ describe('Home.vue', () => {
       router,
       stubs: ['router-link', 'router-view'],
     });
+    router.push('http://localhost:8080/?limit=9&searchVal=&searchBy=title&sortBy=release_date&offset=0');
 
     fetch.resetMocks();
   });
@@ -59,14 +59,16 @@ describe('Home.vue', () => {
     // fetch.once(JSON.stringify(filmsData));
     const searchInput = wrapper.find('.search__input input');
     expect(searchInput.exists()).toBe(true);
-    // await searchInput.setValue('fif');
+    await searchInput.setValue('Fifty');
+    expect(searchInput.element.value).toBe('Fifty');
 
+    // expect(fetch).toBeCalledWith('http://react-cdp-api.herokuapp.com/movies?limit=9&searchBy=title&search=fif&sortBy=release_date&offset=0&sortOrder=asc');
     // await localVue.nextTick();
     // await localVue.nextTick();
 
     // const filmsList = wrapper.find('.gallery');
-    //
-    // expect(fetch).toBeCalledWith('http://react-cdp-api.herokuapp.com/movies?limit=9&searchBy=title&search=fif&sortBy=release_date&offset=0&sortOrder=asc');
-    // expect(filmsList.exists()).toBe(true);
+    // wrapper.vm.$nextTick(() => {
+    //   expect(filmsList.exists()).toBe(true);
+    // });
   });
 });

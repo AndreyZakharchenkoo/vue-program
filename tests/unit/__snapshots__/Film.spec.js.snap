@@ -1,0 +1,205 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Film.vue Renders correctly 1`] = `
+<div>
+  <section
+    class="box-info"
+  >
+    <div
+      class="container"
+    >
+      <div
+        class="card extended"
+      >
+        <!---->
+         
+        <picture
+          class="card__img"
+        >
+          <img
+            alt="Gemini"
+            data-src="https://image.tmdb.org/t/p/w500/oIltQs7MPk7VQFG3DJfgC63mShU.jpg"
+            height="590"
+            src="https://image.tmdb.org/t/p/w500/oIltQs7MPk7VQFG3DJfgC63mShU.jpg"
+            width="327"
+          />
+        </picture>
+         
+        <div
+          class="card__info"
+        >
+          <h3
+            class="card__name"
+          >
+            Gemini
+          </h3>
+           
+          <p
+            class="card__genre"
+          >
+            Mystery
+          </p>
+           
+          <div
+            class="card__year"
+          >
+            2018
+          </div>
+           
+          <div
+            class="card__rating"
+          >
+            10
+          </div>
+           
+          <div
+            class="card__duration"
+            data-aqa="duration"
+          >
+            1h 32min
+          </div>
+           
+          <div
+            class="card__description"
+          >
+            A heinous crime tests the complex relationship between a tenacious personal assistant and her Hollywood starlet boss. As the assistant travels across Los Angeles to unravel the mystery, she must stay one step ahead of a determined policeman and confront her own understanding of friendship, truth and celebrity.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+   
+  <section
+    class="box-gallery"
+  >
+    <div
+      class="box-gallery__top"
+    >
+      <div
+        class="container"
+      >
+        <h2>
+          Films by Mystery genre
+        </h2>
+      </div>
+    </div>
+     
+    <div
+      class="container"
+    >
+      <h2
+        hidden="hidden"
+      >
+        Films gallery
+      </h2>
+       
+      <ul
+        class="gallery post"
+      >
+        <li
+          class="post__item"
+        >
+          <div
+            class="card"
+          >
+            <router-link-stub
+              ariacurrentvalue="page"
+              class="card__link"
+              event="click"
+              tag="a"
+              to="[object Object]"
+            />
+             
+            <picture
+              class="card__img"
+            >
+              <img
+                alt="The Maze Runner"
+                data-src="https://image.tmdb.org/t/p/w500/coss7RgL0NH6g4fC2s5atvf3dFO.jpg"
+                height="590"
+                src="https://image.tmdb.org/t/p/w500/coss7RgL0NH6g4fC2s5atvf3dFO.jpg"
+                width="327"
+              />
+            </picture>
+             
+            <div
+              class="card__info"
+            >
+              <h3
+                class="card__name"
+              >
+                The Maze Runner
+              </h3>
+               
+              <p
+                class="card__genre"
+              >
+                Action
+              </p>
+               
+              <div
+                class="card__year"
+              >
+                2014
+              </div>
+               
+              <!---->
+            </div>
+          </div>
+        </li>
+        <li
+          class="post__item"
+        >
+          <div
+            class="card"
+          >
+            <router-link-stub
+              ariacurrentvalue="page"
+              class="card__link"
+              event="click"
+              tag="a"
+              to="[object Object]"
+            />
+             
+            <picture
+              class="card__img"
+            >
+              <img
+                alt="Blade Runner 2049"
+                data-src="https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg"
+                height="590"
+                src="https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg"
+                width="327"
+              />
+            </picture>
+             
+            <div
+              class="card__info"
+            >
+              <h3
+                class="card__name"
+              >
+                Blade Runner 2049
+              </h3>
+               
+              <p
+                class="card__genre"
+              >
+                Mystery
+              </p>
+               
+              <div
+                class="card__year"
+              >
+                2017
+              </div>
+               
+              <!---->
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>
+`;

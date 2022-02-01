@@ -19,7 +19,7 @@
         <h2 hidden>Films gallery</h2>
         <ul
           v-if="films.length"
-          class="gallery"
+          class="gallery post"
         >
           <li
             class="post__item"
