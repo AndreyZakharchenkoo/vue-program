@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`TheInput.vue Renders correctly 1`] = `
-<input
-  class="input"
-  type="text"
-/>
-`;

@@ -24,7 +24,7 @@
     >
       <a
         href="#"
-        :class="{ active: isPageActive(page) }"
+        :class="{ 'active': isPageActive(page) }"
         @click.prevent="changePage(page)"
       >
         {{ page }}
@@ -83,7 +83,8 @@ export default {
       if (this.totalPages < this.maxVisibleButtons) return 1;
       if (this.currentPage === this.totalPages) return this.totalPages - this.maxVisibleButtons + 1;
       // When in between
-      return this.currentPage - 2;
+
+      return this.currentPage - 5;
     },
     endPage() {
       if (this.totalPages === 0) return 1;

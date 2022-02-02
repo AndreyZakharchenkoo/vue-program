@@ -40,9 +40,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import { SEARCH_PARAMS } from '../core/constants';
-import TheCard from '@/stories/TheCard.vue';
-import ThePlaceholder from '@/stories/ThePlaceholder.vue';
+import { SEARCH_PARAMS } from '@/core/constants';
+import TheCard from '@/components/TheCard.vue';
+import ThePlaceholder from '@/components/ThePlaceholder.vue';
 
 export default {
   name: 'Film',

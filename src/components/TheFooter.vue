@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import TheLogo from '@/stories/TheLogo.vue';
+import TheLogo from '@/components/TheLogo.vue';
 
 export default {
   name: 'TheFooter',

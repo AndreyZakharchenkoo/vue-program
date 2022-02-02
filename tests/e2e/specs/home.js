@@ -70,7 +70,6 @@ describe('Homepage E2E', () => {
     cy.go('back');
 
     // open the second film -> save rating value -> compare with the value from previous film
-    init();
     cy.get('.gallery .post__item:nth-child(2) .card__link')
       .should('have.attr', 'href')
       .then((href) => {

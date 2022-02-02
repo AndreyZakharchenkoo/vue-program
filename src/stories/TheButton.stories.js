@@ -1,4 +1,4 @@
-import TheButton from './TheButton.vue';
+import TheButton from '../components/TheButton.vue';
 
 export default {
   component: TheButton,

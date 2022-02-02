@@ -1,4 +1,4 @@
-import TheLogo from './TheLogo.vue';
+import TheLogo from '../components/TheLogo.vue';
 
 export default {
   component: TheLogo,

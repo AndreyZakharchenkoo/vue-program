@@ -19,13 +19,13 @@
           <div class="sort__label">Search by</div>
           <div class="button-group">
             <the-button
-              :class="{ 'active': searchParam === SEARCH_PARAMS.title }"
+              :class="{ 'active': isBtnActive('search', SEARCH_PARAMS.title) }"
               @click="changeParam(SEARCH_PARAMS.title, true, $event)"
             >
               Title
             </the-button>
             <the-button
-              :class="{ 'active': searchParam === SEARCH_PARAMS.genres }"
+              :class="{ 'active': isBtnActive('search', SEARCH_PARAMS.genres) }"
               @click="changeParam(SEARCH_PARAMS.genres, true, $event)"
             >
               Genre
@@ -47,13 +47,13 @@
             <div class="sort__label">Sort by</div>
             <div class="button-group">
               <the-button
-                :class="{ 'active': sortParam === SORT_PARAMS.date }"
+                :class="{ 'active': isBtnActive('sort', SORT_PARAMS.date) }"
                 @click="changeParam(SORT_PARAMS.date, false, $event)"
               >
                 Release date
               </the-button>
               <the-button
-                :class="{ 'active': sortParam === SORT_PARAMS.rating }"
+                :class="{ 'active': isBtnActive('sort', SORT_PARAMS.rating) }"
                 @click="changeParam(SORT_PARAMS.rating, false, $event)"
               >
                 Rating
@@ -92,10 +92,10 @@
 import { debounce } from 'lodash';
 import { mapState, mapMutations, mapActions } from 'vuex';
 import { SEARCH_PARAMS, SORT_PARAMS } from '../core/constants';
-import TheInput from '@/stories/TheInput.vue';
-import TheButton from '@/stories/TheButton.vue';
-import TheCard from '@/stories/TheCard.vue';
-import ThePlaceholder from '@/stories/ThePlaceholder.vue';
+import TheInput from '@/components/TheInput.vue';
+import TheButton from '@/components/TheButton.vue';
+import TheCard from '@/components/TheCard.vue';
+import ThePlaceholder from '@/components/ThePlaceholder.vue';
 import ThePagination from '@/components/ThePagination.vue';
 
 export default {
@@ -190,6 +190,16 @@ export default {
       });
 
       event.target.classList.add('active');
+    },
+    isBtnActive(type, param) {
+      if (type === 'search') {
+        return this.searchParam === param;
+      }
+      if (type === 'sort') {
+        return this.sortParam === param;
+      }
+
+      return false;
     },
     // eslint-disable-next-line func-names
     searchFilmsWithDelay: debounce(function () {

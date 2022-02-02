@@ -1,4 +1,4 @@
-import ThePlaceholder from './ThePlaceholder.vue';
+import ThePlaceholder from '../components/ThePlaceholder.vue';
 
 export default {
   component: ThePlaceholder,

@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import TheInput from '@/stories/TheInput.vue';
+import TheInput from '@/components/TheInput.vue';
 
 describe('TheInput.vue', () => {
   let wrapper;
@@ -12,7 +12,11 @@ describe('TheInput.vue', () => {
     wrapper.destroy();
   });
 
-  it('Renders correctly', () => {
-    expect(wrapper.vm.$el).toMatchSnapshot();
+  it('Should display value after typing', async () => {
+    const input = wrapper.find('input');
+    expect(input.exists()).toBe(true);
+
+    await input.setValue('Fifty');
+    expect(input.element.value).toBe('Fifty');
   });
 });

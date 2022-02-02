@@ -1,4 +1,4 @@
-import TheCard from './TheCard.vue';
+import TheCard from '../components/TheCard.vue';
 
 export default {
   component: TheCard,

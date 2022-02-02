@@ -71,15 +71,24 @@ describe('Film.vue', () => {
     wrapper.destroy();
   });
 
-  it('Renders correctly', () => {
+  it('Snapshot', () => {
     expect(wrapper.vm.$el).toMatchSnapshot();
   });
 
-  it('Check the correct display data from current store', () => {
+  it('Should display films in gallery from store', () => {
     expect(wrapper.text()).toContain('The Maze Runner');
   });
 
-  it('Action "FETCH_FILM_BY_ID" executes after component was mounted', () => {
-    expect(actions.FETCH_FILM_BY_ID).toHaveBeenCalled();
+  describe('Computed properties', () => {
+    it('"currentGenre" should return correct value', () => {
+      const genre = wrapper.get('.box-gallery__top h2');
+      expect(genre.text()).toContain('Mystery');
+    });
+  });
+
+  describe('Action methods', () => {
+    it('Should executes action "FETCH_FILM_BY_ID" after rendering', () => {
+      expect(actions.FETCH_FILM_BY_ID).toHaveBeenCalled();
+    });
   });
 });

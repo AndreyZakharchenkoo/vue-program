@@ -1,4 +1,4 @@
-import TheInput from './TheInput.vue';
+import TheInput from '../components/TheInput.vue';
 
 export default {
   component: TheInput,

@@ -1,5 +1,5 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
-import TheCard from '@/stories/TheCard.vue';
+import TheCard from '@/components/TheCard.vue';
 
 /*
  * NOTE:
@@ -43,12 +43,36 @@ describe('ThePlaceholder.vue', () => {
     wrapper.destroy();
   });
 
-  it('Check correct duration transformation', () => {
-    const duration = wrapper.get('[data-aqa="duration"]');
-    expect(duration.text()).toBe('1h 46min');
+  describe('Props properties', () => {
+    it('"isExtended === true" should display description and hide link', async () => {
+      await wrapper.setProps({ isExtended: true });
+
+      expect(wrapper.find('.card__link').exists()).toBe(false);
+      expect(wrapper.find('.card__description').exists()).toBe(true);
+    });
+
+    it('"isExtended === false" should hide description and show link', async () => {
+      await wrapper.setProps({ isExtended: false });
+
+      expect(wrapper.find('.card__link').exists()).toBe(true);
+      expect(wrapper.find('.card__description').exists()).toBe(false);
+    });
   });
 
-  it('Renders correctly', () => {
-    expect(wrapper.vm.$el).toMatchSnapshot();
+  describe('Computed properties', () => {
+    it('"genre" should return correct value', () => {
+      const genre = wrapper.get('.card__genre');
+      expect(genre.text()).toBe('Drama');
+    });
+
+    it('"year" should return correct value', () => {
+      const year = wrapper.get('.card__year');
+      expect(year.text()).toBe('2018');
+    });
+
+    it('"duration" should transform to correct value', () => {
+      const duration = wrapper.get('[data-aqa="duration"]');
+      expect(duration.text()).toBe('1h 46min');
+    });
   });
 });

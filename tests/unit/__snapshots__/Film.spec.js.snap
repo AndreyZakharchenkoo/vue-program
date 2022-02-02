@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Film.vue Renders correctly 1`] = `
+exports[`Film.vue Snapshot 1`] = `
 <div>
   <section
     class="box-info"
