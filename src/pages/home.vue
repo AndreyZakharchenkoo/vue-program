@@ -63,7 +63,8 @@
         </div>
       </div>
       <div class="container">
-        <template v-if="films.length" >
+        <the-preloader :loading="isLoading" />
+        <template v-if="films.length && !isLoading" >
           <ul class="gallery post">
             <li
               class="post__item"
@@ -74,13 +75,14 @@
             </li>
           </ul>
           <the-pagination
+            v-if="isTotalPagesMoreThanOne"
             :current-page="currentPage"
             :total-pages="totalPages"
             @pagechanged="changePage"
           />
         </template>
         <the-placeholder
-          v-else
+          v-if="!films.length && !isLoading"
           title="No films found"
         />
       </div>
@@ -96,6 +98,7 @@ import TheInput from '@/components/TheInput.vue';
 import TheButton from '@/components/TheButton.vue';
 import TheCard from '@/components/TheCard.vue';
 import ThePlaceholder from '@/components/ThePlaceholder.vue';
+import ThePreloader from '@/components/ThePreloader.vue';
 import ThePagination from '@/components/ThePagination.vue';
 
 export default {
@@ -105,6 +108,7 @@ export default {
     TheInput,
     TheCard,
     ThePlaceholder,
+    ThePreloader,
     ThePagination,
   },
   mounted() {
@@ -126,6 +130,7 @@ export default {
     SEARCH_PARAMS,
     SORT_PARAMS,
     limit: 9,
+    isLoading: true,
   }),
   computed: {
     ...mapState({
@@ -140,6 +145,7 @@ export default {
       },
       set(val) {
         this.UPDATE_SEARCH_VALUE(val);
+        this.isLoading = true;
       },
     },
     offset: {
@@ -151,14 +157,13 @@ export default {
       },
     },
     currentPage() {
-      if (this.offset) {
-        return Math.trunc(this.offset / this.limit) + 1;
-      }
-
-      return 1;
+      return this.offset ? Math.trunc(this.offset / this.limit) + 1 : 1;
     },
     totalPages() {
       return Math.ceil(this.totalFoundedFilms / this.limit);
+    },
+    isTotalPagesMoreThanOne() {
+      return this.totalPages !== 1;
     },
   },
   methods: {
@@ -203,6 +208,7 @@ export default {
     },
     // eslint-disable-next-line func-names
     searchFilmsWithDelay: debounce(function () {
+      this.UPDATE_OFFSET(0);
       this.fetchFilmsByParams();
     }, 300),
     async fetchFilmsByParams() {
@@ -216,6 +222,7 @@ export default {
 
       await this.FETCH_FILMS_BY_PARAMS(params)
         .then(() => {
+          this.isLoading = false;
           this.addParamsToQuery(params);
         })
         .catch((err) => {
@@ -285,6 +292,13 @@ export default {
     line-height: 19px;
     text-transform: uppercase;
   }
+}
+
+.box-gallery__top + .container {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 500px);
+  padding: 80px 0;
 }
 
 .pagination {

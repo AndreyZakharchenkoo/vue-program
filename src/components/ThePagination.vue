@@ -84,7 +84,7 @@ export default {
       if (this.currentPage === this.totalPages) return this.totalPages - this.maxVisibleButtons + 1;
       // When in between
 
-      return this.currentPage - 5;
+      return this.currentPage - 2;
     },
     endPage() {
       if (this.totalPages === 0) return 1;

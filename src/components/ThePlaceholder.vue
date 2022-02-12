@@ -21,8 +21,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 500px);
-  padding: 80px 0;
+  flex: 1;
 }
 
 .placeholder h2 {
